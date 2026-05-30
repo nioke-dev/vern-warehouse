@@ -508,7 +508,7 @@
                                         </ul>
 
                                         <div class="mt-4 flex flex-col items-center gap-4">
-                                            <button class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity cursor-pointer">
+                                            <button @click="$dispatch('open-checkout', { package: 'Pro', price: 'IDR 99.000' })" class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity cursor-pointer">
                                                 <img src="{{ asset('assets/images/icons/pricing/Mulai Menggunakan Vern icon button.svg') }}" class="w-5 h-5" />
                                                 Mulai Menggunakan Vern
                                             </button>
@@ -547,7 +547,7 @@
                                         </ul>
 
                                         <div class="mt-4 flex flex-col items-center gap-4">
-                                            <button class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity cursor-pointer">
+                                            <button @click="$dispatch('open-checkout', { package: 'Enterprise', price: 'IDR 199.000' })" class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity cursor-pointer">
                                                 <img src="{{ asset('assets/images/icons/pricing/Upgrade ke Enterprise icon button.svg') }}" class="w-5 h-5" />
                                                 Upgrade ke Enterprise
                                             </button>
@@ -889,44 +889,190 @@
 
         <!-- GSAP Text Reveal Animation Script -->
         <script>
-            document.addEventListener('livewire:navigated', async () => {
+            function initTextReveal() {
+                // Kill previous ScrollTrigger instances to avoid memory leaks/conflicts during SPA navigation
                 if (typeof ScrollTrigger !== 'undefined') {
                     ScrollTrigger.getAll().forEach(t => t.kill());
                 }
 
                 // Registrasi ScrollTrigger ke GSAP
-                gsap.registerPlugin(ScrollTrigger);
+                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
+                }
 
                 // Tunggu font sampai benar-benar siap
-                await document.fonts.ready;
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(() => {
+                        setTimeout(runSplitAndGsap, 500);
+                    });
+                } else {
+                    setTimeout(runSplitAndGsap, 500);
+                }
 
-                // Kasih delay sedikit biar layout stabil
-                setTimeout(() => {
+                function runSplitAndGsap() {
                     const splitTypes = document.querySelectorAll(".reveal-type");
 
                     splitTypes.forEach((element) => {
                         const bg = element.dataset.bgColor || "#cccccc";
                         const fg = element.dataset.fgColor || "#000000";
 
-                        const text = new SplitType(element, { types: "words,chars" });
+                        if (typeof SplitType !== 'undefined' && typeof gsap !== 'undefined') {
+                            const text = new SplitType(element, { types: "words,chars" });
 
-                        gsap.from(text.chars, {
-                            color: bg,
-                            stagger: 0.1,
-                            scrollTrigger: {
-                                trigger: element,
-                                start: "top 80%",
-                                end: "bottom 40%",
-                                scrub: true,
-                                markers: false,
-                            },
-                        });
+                            gsap.from(text.chars, {
+                                color: bg,
+                                stagger: 0.1,
+                                scrollTrigger: {
+                                    trigger: element,
+                                    start: "top 80%",
+                                    end: "bottom 40%",
+                                    scrub: true,
+                                    markers: false,
+                                },
+                            });
+                        }
                     });
 
-                    ScrollTrigger.refresh();
-                }, 500);
-            });
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.refresh();
+                    }
+                }
+            }
+
+            // Run on initial page load
+            document.addEventListener('DOMContentLoaded', initTextReveal);
+            // Run on Livewire SPA navigation
+            document.addEventListener('livewire:navigated', initTextReveal);
         </script>
+
+        <!-- Checkout Modal -->
+        <div x-data="{
+            open: false,
+            loading: false,
+            packageName: '',
+            priceText: '',
+            form: {
+                customer_name: '',
+                email: '',
+                whatsapp: ''
+            },
+            errorMessage: '',
+            openCheckout(pkg, price) {
+                this.packageName = pkg;
+                this.priceText = price;
+                this.open = true;
+                this.errorMessage = '';
+                this.form.customer_name = '';
+                this.form.email = '';
+                this.form.whatsapp = '';
+            },
+            async submitCheckout() {
+                this.loading = true;
+                this.errorMessage = '';
+                try {
+                    const response = await fetch('/package-orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            customer_name: this.form.customer_name,
+                            email: this.form.email,
+                            whatsapp: this.form.whatsapp,
+                            package_name: this.packageName
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (response.ok && data.success) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        this.errorMessage = data.message || 'Terjadi kesalahan saat memproses pembayaran.';
+                    }
+                } catch (err) {
+                    this.errorMessage = 'Gagal menghubungkan ke server: ' + err.message;
+                } finally {
+                    this.loading = false;
+                }
+            }
+        }" @open-checkout.window="openCheckout($event.detail.package, $event.detail.price)"
+           x-show="open" 
+           class="fixed inset-0 z-[2000] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0"
+           x-transition:enter-end="opacity-100"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100"
+           x-transition:leave-end="opacity-0"
+           style="display: none;">
+             
+             <div class="bg-white rounded-2xl w-full max-w-[480px] overflow-hidden shadow-2xl relative"
+                  @click.away="if (!loading) open = false"
+                  x-transition:enter="transition ease-out duration-300 transform"
+                  x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+                  x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                  x-transition:leave="transition ease-in duration-200 transform"
+                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                  x-transition:leave-end="opacity-0 translate-y-4 scale-95">
+                  
+                  <!-- Modal Header -->
+                  <div class="p-6 bg-gradient-to-r from-[#0077FF] to-[#0055CC] text-white">
+                      <h3 class="text-xl font-bold">Formulir Langganan Vern</h3>
+                      <p class="text-sm opacity-90 mt-1">Lengkapi data Anda untuk melanjutkan pembayaran</p>
+                      
+                      <!-- Close Button -->
+                      <button @click="open = false" :disabled="loading" class="absolute top-4 right-4 text-white/80 hover:text-white disabled:opacity-50">
+                          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                              <path d="M18 6L6 18M6 6l12 12"/>
+                          </svg>
+                      </button>
+                  </div>
+
+                  <!-- Modal Body -->
+                  <form @submit.prevent="submitCheckout" class="p-6 flex flex-col gap-4">
+                      <!-- Selected Package Info Card -->
+                      <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-between">
+                          <div>
+                              <p class="text-xs text-[#0077FF] font-semibold uppercase tracking-wider">Paket Pilihan</p>
+                              <h4 class="text-lg font-bold text-gray-900" x-text="'Vern ' + packageName"></h4>
+                          </div>
+                          <div class="text-right">
+                              <p class="text-lg font-bold text-[#0077FF]" x-text="priceText + ' / Bulan'"></p>
+                          </div>
+                      </div>
+
+                      <!-- Error Alert -->
+                      <div x-show="errorMessage" x-text="errorMessage" class="bg-red-50 border border-red-200 text-red-600 rounded-xl p-3 text-sm" style="display: none;"></div>
+
+                      <!-- Name Input -->
+                      <div class="flex flex-col gap-1.5">
+                          <label class="text-sm font-semibold text-gray-700">Nama Lengkap*</label>
+                          <input x-model="form.customer_name" type="text" required placeholder="Masukkan nama lengkap Anda" class="w-full h-11 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#0077FF] outline-none text-sm transition-all" :disabled="loading" />
+                      </div>
+
+                      <!-- Email Input -->
+                      <div class="flex flex-col gap-1.5">
+                          <label class="text-sm font-semibold text-gray-700">Alamat Email*</label>
+                          <input x-model="form.email" type="email" required placeholder="name@company.com" class="w-full h-11 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#0077FF] outline-none text-sm transition-all" :disabled="loading" />
+                      </div>
+
+                      <!-- Whatsapp Input -->
+                      <div class="flex flex-col gap-1.5">
+                          <label class="text-sm font-semibold text-gray-700">Nomor WhatsApp*</label>
+                          <input x-model="form.whatsapp" type="text" required placeholder="Contoh: 08123456789" class="w-full h-11 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#0077FF] outline-none text-sm transition-all" :disabled="loading" />
+                      </div>
+
+                      <!-- Submit Button -->
+                      <button type="submit" :disabled="loading" class="w-full h-12 bg-black text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-gray-900 transition-all shadow-lg mt-2">
+                          <div x-show="loading" class="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span x-text="loading ? 'Memproses...' : 'Lanjutkan ke Pembayaran'"></span>
+                      </button>
+                  </form>
+             </div>
+        </div>
+
         @livewireScripts
     </body>
 </html>

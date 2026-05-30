@@ -14,6 +14,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             '/midtrans/notification',
             'midtrans/notification',
+            '/midtrans/package-notification',
+            'midtrans/package-notification',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
