@@ -43,12 +43,14 @@ Route::post('/login', function (Request $request) {
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageOrderController;
+use App\Http\Controllers\DashboardHomeController;
 
 Route::post('/midtrans/notification', [OrderController::class, 'handleNotification'])->name('midtrans.notification');
 Route::post('/package-orders', [PackageOrderController::class, 'store'])->name('package-orders.store');
 Route::post('/midtrans/package-notification', [PackageOrderController::class, 'handleNotification'])->name('midtrans.package-notification');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/home', [DashboardHomeController::class, 'index'])->name('dashboard.home');
     Route::get('/dashboard', [InventoryController::class, 'index'])->name('dashboard');
     Route::get('/products/check-sku', [InventoryController::class, 'checkSku'])->name('products.check-sku');
     Route::post('/products', [InventoryController::class, 'store'])->name('products.store');

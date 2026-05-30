@@ -70,7 +70,7 @@
                     <ul class="flex flex-col gap-1">
                         <!-- Home -->
                         <li>
-                            <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black">
+                            <a href="{{ route('dashboard.home') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 {{ Route::currentRouteName() === 'dashboard.home' ? 'bg-[#0077FF]/10 text-[#0077FF]' : 'text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black' }}">
                                 <iconify-icon icon="material-symbols:home-rounded" width="20" height="20"></iconify-icon>
                                 <span>Home</span>
                             </a>
