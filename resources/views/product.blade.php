@@ -588,9 +588,9 @@
                                         <p class="text-[10px] font-semibold text-black tracking-[-0.03em] font-['Plus_Jakarta_Sans']">Owner Apotik Krisna Farma</p>
                                     </div>
                                 </div>
-                                <button class="bg-black text-white rounded-[100px] font-semibold text-[14px] tracking-[-0.03em] font-['Plus_Jakarta_Sans'] hover:opacity-90 transition-opacity px-[15px] py-[10px] cursor-pointer">
+                                <a href="{{ route('casestudy') }}" wire:navigate class="inline-block bg-black text-white rounded-[100px] font-semibold text-[14px] tracking-[-0.03em] font-['Plus_Jakarta_Sans'] hover:opacity-90 transition-opacity px-[15px] py-[10px] cursor-pointer">
                                     Baca Kisah Mereka
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -607,9 +607,9 @@
                                         <p class="text-[10px] font-semibold text-black tracking-[-0.03em] font-['Plus_Jakarta_Sans']">Owner Supermarket Warna Warni</p>
                                     </div>
                                 </div>
-                                <button class="bg-black text-white rounded-[100px] font-semibold text-[14px] tracking-[-0.03em] font-['Plus_Jakarta_Sans'] hover:opacity-90 transition-opacity px-[15px] py-[10px] cursor-pointer">
+                                <a href="{{ route('casestudy') }}" wire:navigate class="inline-block bg-black text-white rounded-[100px] font-semibold text-[14px] tracking-[-0.03em] font-['Plus_Jakarta_Sans'] hover:opacity-90 transition-opacity px-[15px] py-[10px] cursor-pointer">
                                     Baca Kisah Mereka
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
