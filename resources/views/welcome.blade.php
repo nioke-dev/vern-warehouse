@@ -524,9 +524,9 @@
                         </div>
                     </div>
 
-                    <button class="bg-[#0077FF] text-white px-10 py-4 rounded-full font-bold text-[16px] hover:bg-[#0066DD] transition-all shadow-lg shadow-blue-500/25 mb-32">
+                    <a href="{{ route('about') }}" wire:navigate class="inline-block bg-[#0077FF] text-white px-10 py-4 rounded-full font-bold text-[16px] hover:bg-[#0066DD] transition-all shadow-lg shadow-blue-500/25 mb-32 cursor-pointer">
                         Lihat Cerita Kami
-                    </button>
+                    </a>
                 </div>
             </section>
 
