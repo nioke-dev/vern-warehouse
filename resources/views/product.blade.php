@@ -18,6 +18,9 @@
         <!-- Alpine.js CDN -->
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+        <!-- Midtrans Snap JS -->
+        <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+
         <!-- GSAP & ScrollTrigger & SplitType CDNs for Vision Text Reveal Animation -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -987,7 +990,24 @@
 
                     const data = await response.json();
                     if (response.ok && data.success) {
-                        window.location.href = data.redirect_url;
+                        if (window.snap) {
+                            window.snap.pay(data.token, {
+                                onSuccess: (result) => {
+                                    this.open = false;
+                                    window.location.reload();
+                                },
+                                onPending: (result) => {
+                                    this.open = false;
+                                    window.location.reload();
+                                },
+                                onError: (result) => {
+                                    this.errorMessage = 'Pembayaran gagal. Silakan coba lagi.';
+                                },
+                                onClose: () => {}
+                            });
+                        } else {
+                            window.location.href = data.redirect_url;
+                        }
                     } else {
                         this.errorMessage = data.message || 'Terjadi kesalahan saat memproses pembayaran.';
                     }
@@ -1061,7 +1081,7 @@
                       <!-- Whatsapp Input -->
                       <div class="flex flex-col gap-1.5">
                           <label class="text-sm font-semibold text-gray-700">Nomor WhatsApp*</label>
-                          <input x-model="form.whatsapp" type="text" required placeholder="Contoh: 08123456789" class="w-full h-11 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#0077FF] outline-none text-sm transition-all" :disabled="loading" />
+                          <input x-model="form.whatsapp" @input="form.whatsapp = form.whatsapp.replace(/[^0-9+]/g, '')" type="text" required placeholder="Contoh: 08123456789" class="w-full h-11 px-4 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#0077FF] outline-none text-sm transition-all" :disabled="loading" />
                       </div>
 
                       <!-- Submit Button -->
@@ -1072,6 +1092,7 @@
                   </form>
              </div>
         </div>
+
 
         @livewireScripts
     </body>
