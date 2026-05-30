@@ -733,44 +733,60 @@
 
         <!-- GSAP Text Reveal Animation Script -->
         <script>
-            document.addEventListener('livewire:navigated', async () => {
+            function initTextReveal() {
                 // Kill previous ScrollTrigger instances to avoid memory leaks/conflicts during SPA navigation
                 if (typeof ScrollTrigger !== 'undefined') {
                     ScrollTrigger.getAll().forEach(t => t.kill());
                 }
 
                 // Registrasi ScrollTrigger ke GSAP
-                gsap.registerPlugin(ScrollTrigger);
+                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
+                }
 
                 // Tunggu font sampai benar-benar siap
-                await document.fonts.ready;
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then(() => {
+                        setTimeout(runSplitAndGsap, 500);
+                    });
+                } else {
+                    setTimeout(runSplitAndGsap, 500);
+                }
 
-                // Kasih delay sedikit biar layout stabil
-                setTimeout(() => {
+                function runSplitAndGsap() {
                     const splitTypes = document.querySelectorAll(".reveal-type");
 
                     splitTypes.forEach((element) => {
                         const bg = element.dataset.bgColor || "#cccccc";
                         const fg = element.dataset.fgColor || "#000000";
 
-                        const text = new SplitType(element, { types: "words,chars" });
+                        if (typeof SplitType !== 'undefined' && typeof gsap !== 'undefined') {
+                            const text = new SplitType(element, { types: "words,chars" });
 
-                        gsap.from(text.chars, {
-                            color: bg,
-                            stagger: 0.1,
-                            scrollTrigger: {
-                                trigger: element,
-                                start: "top 80%",
-                                end: "bottom 40%",
-                                scrub: true,
-                                markers: false,
-                            },
-                        });
+                            gsap.from(text.chars, {
+                                color: bg,
+                                stagger: 0.1,
+                                scrollTrigger: {
+                                    trigger: element,
+                                    start: "top 80%",
+                                    end: "bottom 40%",
+                                    scrub: true,
+                                    markers: false,
+                                },
+                            });
+                        }
                     });
 
-                    ScrollTrigger.refresh();
-                }, 500);
-            });
+                    if (typeof ScrollTrigger !== 'undefined') {
+                        ScrollTrigger.refresh();
+                    }
+                }
+            }
+
+            // Run on initial page load
+            document.addEventListener('DOMContentLoaded', initTextReveal);
+            // Run on Livewire SPA navigation
+            document.addEventListener('livewire:navigated', initTextReveal);
         </script>
         @livewireScripts
     </body>
