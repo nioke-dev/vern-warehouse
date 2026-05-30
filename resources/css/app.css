@@ -1,0 +1,82 @@
+@import 'tailwindcss';
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* Animations for Landing Page */
+.marquee-container {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.marquee-content {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes highlight {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes highlight-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  30% {
+    width: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-highlight {
+  animation: highlight 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.animate-highlight-line {
+  animation: highlight-line 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+.shadow-pricing {
+  box-shadow: 0px 2px 4px 3px rgba(0, 0, 0, 0.25);
+}
+
