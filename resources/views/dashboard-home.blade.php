@@ -180,7 +180,9 @@
                 <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-[#FBA518]"></div><span class="text-[11px] font-medium text-[#8B8E97]">Low Stock Items</span></div>
             </div>
 
-            <canvas id="productDetailsChart" height="220"></canvas>
+            <div style="height: 250px; position: relative;">
+                <canvas id="productDetailsChart"></canvas>
+            </div>
         </div>
 
         <!-- Purchase & Sales - Line Chart (col-span-6) -->
@@ -200,7 +202,9 @@
                 <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 rounded-full bg-[#8B5CF6]"></div><span class="text-[11px] font-medium text-[#8B8E97]">Purchase</span></div>
             </div>
 
-            <canvas id="purchaseSalesChart" height="220"></canvas>
+            <div style="height: 250px; position: relative;">
+                <canvas id="purchaseSalesChart"></canvas>
+            </div>
         </div>
     </div>
 
