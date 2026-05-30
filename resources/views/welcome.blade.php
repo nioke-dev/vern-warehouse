@@ -429,8 +429,9 @@
             <section class="py-12 bg-white relative overflow-hidden">
                 <div class="container mx-auto px-6 lg:px-24 relative z-10 text-center">
                     <p class="font-['Plus_Jakarta_Sans'] font-medium text-[16px] tracking-[-0.03em] mb-6 text-center">
-                        <span class="text-[#0077FF]">Visi Kami</span>
-                        <span class="text-[#B3B3B3] ml-1">Kedepan</span>
+                        <span class="inline-block" style="background: linear-gradient(90deg, #0077FF 37%, #FBA518 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            Visi Kami Kedepan
+                        </span>
                     </p>
 
                     <div class="max-w-[1000px] mx-auto">
