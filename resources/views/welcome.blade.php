@@ -75,7 +75,7 @@
 
         <main>
             <!-- Hero Section -->
-            <section class="relative min-h-[90vh] flex items-center pt-10 lg:pt-20">
+            <section class="relative min-h-[90vh] flex items-center pt-10 lg:pt-20" x-data>
                 <!-- Background Mesh -->
                 <div
                     class="absolute top-0 right-0 w-full lg:w-3/4 h-[140%] pointer-events-none z-0 bg-no-repeat bg-right-top bg-cover opacity-100 transition-opacity duration-1000"
@@ -732,7 +732,7 @@
             </section>
 
             <!-- Section 8: Pricing Section -->
-            <section id="pricing" class="py-24 bg-[#F2FAFF] font-['Plus_Jakarta_Sans']">
+            <section id="pricing" class="py-24 bg-[#F2FAFF] font-['Plus_Jakarta_Sans']" x-data>
                 <div class="max-w-[1280px] mx-auto px-6">
                     <div class="flex flex-col lg:flex-row justify-between items-center gap-20">
                         
