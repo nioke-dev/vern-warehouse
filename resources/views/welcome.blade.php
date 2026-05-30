@@ -62,9 +62,9 @@
                 <!-- Action Items -->
                 <div class="flex items-center gap-4 mr-1">
                     <a href="{{ route('login') }}" wire:navigate class="text-white font-medium text-sm hover:opacity-80 transition-opacity">Masuk</a>
-                    <button class="bg-[#0077FF] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#0066EE] transition-all transform hover:scale-105 active:scale-95">
+                    <a href="{{ route('login') }}" wire:navigate class="bg-[#0077FF] text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-[#0066EE] transition-all transform hover:scale-105 active:scale-95 cursor-pointer">
                         Coba Vern Gratis
-                    </button>
+                    </a>
                 </div>
                 
                 <!-- Mobile Toggle Placeholder -->
@@ -547,16 +547,16 @@
                             <p class="text-[16px] font-normal text-black leading-relaxed tracking-[-0.03em] font-['Plus_Jakarta_Sans']">
                                 Deteksi celah stok, ungkap risiko penyusutan, dan identifikasi produk yang bergerak lambat sebelum menjadi masalah yang mahal.
                             </p>
-                            <button class="w-fit bg-[#0077FF] text-white px-6 py-3 rounded-full font-medium text-[14px] flex items-center gap-2 hover:bg-[#0066DD] transition-all">
+                            <a href="{{ route('login') }}" wire:navigate class="w-fit bg-[#0077FF] text-white px-6 py-3 rounded-full font-medium text-[14px] flex items-center gap-2 hover:bg-[#0066DD] transition-all cursor-pointer">
                                 Coba Vern <span class="text-xl">→</span>
-                              </button>
+                              </a>
                         </div>
                     </div>
 
                     <!-- Solution Cards Grid (2x2) -->
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Card 1: Notifikasi Stok -->
-                        <div class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden">
+                        <a href="{{ route('product') }}" wire:navigate class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden no-underline">
                             <!-- Image Container -->
                             <div class="aspect-[5/5] bg-[#F8FAFC] rounded-t-[24px] rounded-b-0 pt-5 pr-5 relative overflow-hidden border-b border-gray-50 flex items-start justify-start">
                                 <img src="{{ asset('assets/images/solutions/notifikasi-stok.svg') }}" alt="Notifikasi Stok" class="w-full h-full object-cover object-left-top" />
@@ -582,10 +582,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
 
                         <!-- Card 2: Inventory Analisis -->
-                        <div class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden">
+                        <a href="{{ route('product') }}" wire:navigate class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden no-underline">
                             <div class="aspect-[5/5] bg-[#F8FAFC] rounded-t-[24px] rounded-b-0 pt-5 pr-5 relative overflow-hidden border-b border-gray-50 flex items-start justify-start">
                                 <img src="{{ asset('assets/images/solutions/inventory-analisis.svg') }}" alt="Inventory Analisis" class="w-full h-full object-cover object-left-top" />
                                 <!-- Efek Blur/Fade Bawah -->
@@ -609,10 +609,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
 
                         <!-- Card 3: Status Kesehatan Stok -->
-                        <div class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden">
+                        <a href="{{ route('product') }}" wire:navigate class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden no-underline">
                             <div class="aspect-[5/5] bg-[#F8FAFC] rounded-t-[24px] rounded-b-0 pt-5 pr-5 relative overflow-hidden border-b border-gray-50 flex items-start justify-start">
                                 <img src="{{ asset('assets/images/solutions/status-kesehatan-stok.svg') }}" alt="Status Kesehatan Stok" class="w-full h-full object-cover object-left-top" />
                                 <!-- Efek Blur/Fade Bawah -->
@@ -636,10 +636,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
 
                         <!-- Card 4: Integrasi Lintas Platform -->
-                        <div class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden">
+                        <a href="{{ route('product') }}" wire:navigate class="bg-white rounded-[24px] border border-gray-100 p-0 flex flex-col group cursor-pointer hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500 text-left overflow-hidden no-underline">
                             <div class="aspect-[5/5] bg-[#F8FAFC] rounded-t-[24px] rounded-b-0 pt-5 pr-5 relative overflow-hidden border-b border-gray-50 flex items-start justify-start">
                                 <img src="{{ asset('assets/images/solutions/integrasi-lintas-platform.svg') }}" alt="Integrasi Lintas Platform" class="w-full h-full object-cover object-left-top" />
                                 <!-- Efek Blur/Fade Bawah -->
@@ -663,7 +663,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </section>
