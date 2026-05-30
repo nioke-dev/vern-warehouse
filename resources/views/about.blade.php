@@ -15,8 +15,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
 
-        <!-- Alpine.js CDN (Di-disable karena conflict dengan Livewire v3/v4 yang meng-include Alpine secara otomatis) -->
-        <!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
+        <!-- Alpine.js CDN (Di-disable karena conflict dengan Livewire v3/v4 yang meng-include Alpine secara otomatis, tetapi karena halaman ini tidak memiliki komponen Livewire, kita perlu menyertakannya agar interaksi Alpine berfungsi) -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
         <!-- GSAP & ScrollTrigger & SplitType CDNs for Vision Text Reveal Animation -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

@@ -15,6 +15,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         @livewireStyles
 
+        <!-- Alpine.js CDN -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
         <!-- GSAP & ScrollTrigger & SplitType CDNs for Smooth Scrolling -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
