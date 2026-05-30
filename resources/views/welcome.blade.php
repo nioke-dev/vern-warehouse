@@ -111,7 +111,7 @@
                             <!-- Buttons & Handwritten Note -->
                             <div class="flex flex-col items-start gap-4 mb-10">
                                 <div class="flex flex-wrap items-center gap-6">
-                                    <button @click="$dispatch('open-checkout', { package: 'Pro', price: 'IDR 99.000' })" class="bg-black text-white px-8 py-3.5 rounded-xl font-bold text-[16px] hover:bg-gray-900 transition-all shadow-lg shadow-black/10">
+                                    <button @click="$dispatch('open-checkout', { package: 'Pro', price: 'IDR 99.000' })" class="bg-black text-white px-8 py-3.5 rounded-xl font-bold text-[16px] hover:bg-gray-900 transition-all shadow-lg shadow-black/10 cursor-pointer">
                                         Mulai Menggunakan Vern
                                     </button>
                                     <a href="#cara-kerja" class="flex items-center gap-2 text-black font-bold text-[16px] hover:text-[#0077FF] transition-colors group">
@@ -841,7 +841,7 @@
                                         </ul>
 
                                         <div class="mt-4 flex flex-col items-center gap-4">
-                                            <button @click="$dispatch('open-checkout', { package: 'Pro', price: 'IDR 99.000' })" class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity">
+                                            <button @click="$dispatch('open-checkout', { package: 'Pro', price: 'IDR 99.000' })" class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity cursor-pointer">
                                                 <img src="{{ asset('assets/images/icons/pricing/Mulai Menggunakan Vern icon button.svg') }}" class="w-5 h-5" />
                                                 Mulai Menggunakan Vern
                                             </button>
@@ -898,7 +898,7 @@
                                         </ul>
 
                                         <div class="mt-4 flex flex-col items-center gap-4">
-                                            <button @click="$dispatch('open-checkout', { package: 'Enterprise', price: 'IDR 199.000' })" class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity">
+                                            <button @click="$dispatch('open-checkout', { package: 'Enterprise', price: 'IDR 199.000' })" class="w-full bg-black text-white h-[56px] rounded-[12px] flex items-center justify-center gap-3 font-semibold text-[16px] tracking-[-3%] hover:opacity-90 transition-opacity cursor-pointer">
                                                 <img src="{{ asset('assets/images/icons/pricing/Upgrade ke Enterprise icon button.svg') }}" class="w-5 h-5" />
                                                 Upgrade ke Enterprise
                                             </button>
