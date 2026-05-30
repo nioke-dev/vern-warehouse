@@ -152,8 +152,8 @@
                     </div>
 
                     <!-- Video Placeholder (Figma Playful GIF) -->
-                    <div class="relative w-full mx-auto aspect-video bg-[#F8F9FA] rounded-[20px] shadow-[0_20px_60px_rgba(0,119,255,0.15)] overflow-hidden z-10 border border-white/50">
-                        <img src="{{ asset('assets/images/product/gif/Dashboad-Playful.gif') }}" alt="Dashboard Playful Preview" style="width: 100%; height: 100%; object-fit: contain;" />
+                    <div class="relative w-full mx-auto z-10 flex justify-center">
+                        <img src="{{ asset('assets/images/product/gif/Dashboad-Playful.gif') }}" alt="Dashboard Playful Preview" class="w-full h-auto max-w-full rounded-[20px]" />
                     </div>
                 </div>
             </section>
