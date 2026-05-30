@@ -42,10 +42,10 @@
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBePacked }}</span>
                         <span class="text-[9px] font-semibold text-[#22C55E] bg-[#22C55E]/10 px-1.5 py-0.5 rounded-full whitespace-nowrap">↑+4.5%</span>
                     </div>
-                    <div class="flex items-end gap-[2px] mt-auto" style="height: 24px;">
-                        @php $bars = [10, 16, 22, 12, 18, 24, 14, 20, 22, 15, 21, 24]; @endphp
+                    <div class="flex items-end justify-center mt-auto" style="height: 28px; gap: 3px;">
+                        @php $bars = [12, 20, 28, 16, 24, 18, 26]; @endphp
                         @foreach($bars as $h)
-                            <div style="width: 4px; height: {{ $h }}px; background: #0077FF; border-radius: 9999px;"></div>
+                            <div style="width: 6px; height: {{ $h }}px; background: #0077FF; border-radius: 9999px;"></div>
                         @endforeach
                     </div>
                 </div>
