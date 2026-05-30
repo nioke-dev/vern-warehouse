@@ -25,13 +25,13 @@
                     <p class="text-[11px] font-medium text-[#8B8E97] mb-2">To be Shipped</p>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBeShipped }}</span>
-                        <span class="text-[9px] font-semibold text-[#22C55E] bg-[#22C55E]/10 px-1.5 py-0.5 rounded-full whitespace-nowrap">↑+3.4%</span>
+                        <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full whitespace-nowrap" style="color: {{ $orderChangePercent >= 0 ? '#22C55E' : '#EF4444' }}; background: {{ $orderChangePercent >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)' }};">{{ $orderChangePercent >= 0 ? '↑' : '↓' }}{{ $orderChangePercent >= 0 ? '+' : '' }}{{ $orderChangePercent }}%</span>
                     </div>
                     <div class="flex items-end justify-between mt-auto">
                         <svg width="70" height="24" viewBox="0 0 70 24" fill="none" class="flex-shrink-0">
                             <path d="M0 20 Q8 15, 15 17 T30 12 T45 14 T60 5 L70 3" stroke="#22C55E" stroke-width="2" fill="none" stroke-linecap="round"/>
                         </svg>
-                        <span class="text-[10px] font-semibold text-[#8B8E97] ml-1">$3,345</span>
+                        <span class="text-[10px] font-semibold text-[#8B8E97] ml-1">Rp{{ number_format($thisMonthRevenue, 0, ',', '.') }}</span>
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
                     <p class="text-[11px] font-medium text-[#8B8E97] mb-2">To be Packed</p>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBePacked }}</span>
-                        <span class="text-[9px] font-semibold text-[#22C55E] bg-[#22C55E]/10 px-1.5 py-0.5 rounded-full whitespace-nowrap">↑+4.5%</span>
+                        <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full whitespace-nowrap" style="color: {{ $orderChangePercent >= 0 ? '#22C55E' : '#EF4444' }}; background: {{ $orderChangePercent >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)' }};">{{ $orderChangePercent >= 0 ? '↑' : '↓' }}{{ $orderChangePercent >= 0 ? '+' : '' }}{{ $orderChangePercent }}%</span>
                     </div>
                     <div class="flex items-end justify-center mt-auto" style="height: 28px; gap: 3px;">
                         @php $bars = [12, 20, 28, 16, 24, 18, 26]; @endphp
@@ -55,15 +55,16 @@
                     <p class="text-[11px] font-medium text-[#8B8E97] mb-2">To be Invoiced</p>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBeInvoiced }}</span>
-                        <span class="text-[9px] font-semibold text-[#EF4444] bg-[#EF4444]/10 px-1.5 py-0.5 rounded-full whitespace-nowrap">↓-1.6%</span>
+                        @php $invoicePercent = $toBePacked > 0 ? round(($toBeInvoiced / $toBePacked) * 100) : 0; @endphp
+                        <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full whitespace-nowrap" style="color: {{ $invoicePercent >= 50 ? '#22C55E' : '#EF4444' }}; background: {{ $invoicePercent >= 50 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)' }};">{{ $invoicePercent }}%</span>
                     </div>
                     <div class="flex items-center justify-center mt-auto">
                         <div class="relative" style="width: 50px; height: 50px;">
                             <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
                                 <circle cx="18" cy="18" r="15.9155" fill="none" stroke="#E5E7EB" stroke-width="3"/>
-                                <circle cx="18" cy="18" r="15.9155" fill="none" stroke="#FBA518" stroke-width="3" stroke-dasharray="40 100" stroke-linecap="round"/>
+                                <circle cx="18" cy="18" r="15.9155" fill="none" stroke="#FBA518" stroke-width="3" stroke-dasharray="{{ $invoicePercent }} {{ 100 - $invoicePercent }}" stroke-linecap="round"/>
                             </svg>
-                            <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #000;">40%</span>
+                            <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #000;">{{ $invoicePercent }}%</span>
                         </div>
                     </div>
                 </div>
@@ -125,13 +126,18 @@
 
             <!-- Heatmap Grid -->
             <div class="flex flex-col" style="gap: 5px;">
-                @php $heatHexColors = ['#E8F5E9', '#0077FF', '#FBA518']; @endphp
                 @foreach($topItems as $item)
                 <div class="flex items-center gap-2">
                     <span class="text-[10px] font-medium text-[#8B8E97] truncate" style="width: 55px;">{{ $item }}</span>
                     <div class="flex flex-1" style="gap: 4px;">
                         @for($d = 0; $d < 7; $d++)
-                            <div style="flex: 1; height: 20px; border-radius: 3px; background: {{ $heatHexColors[rand(0, 2)] }};"></div>
+                            @php
+                                $qty = isset($heatmapData[$item]) ? ($heatmapData[$item][$d] ?? 0) : 0;
+                                if ($qty >= 15) $hColor = '#FBA518';
+                                elseif ($qty >= 5) $hColor = '#0077FF';
+                                else $hColor = '#E8F5E9';
+                            @endphp
+                            <div style="flex: 1; height: 20px; border-radius: 3px; background: {{ $hColor }};" title="{{ $qty }} sold"></div>
                         @endfor
                     </div>
                 </div>
@@ -259,44 +265,9 @@
                         </tr>
                         @endforeach
                     @else
-                        @foreach($demoOrders as $demo)
-                        <tr class="border-b border-black/5 hover:bg-[#FAFBFC] transition-colors">
-                            <td class="py-4 pl-3"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 accent-[#0077FF]" /></td>
-                            <td class="py-4">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="{{ $demo['name'] }}" class="w-9 h-9 rounded-full object-cover border border-black/5" />
-                                    <span class="text-[13px] font-semibold text-black">{{ $demo['name'] }}</span>
-                                </div>
-                            </td>
-                            <td class="py-4 text-center">
-                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-[12px] font-bold" style="background: rgba(34,197,94,0.1); color: #22C55E;">{{ $demo['packed'] }}</span>
-                            </td>
-                            <td class="py-4 text-[13px] font-medium text-[#8B8E97]">{{ $demo['date'] }}</td>
-                            <td class="py-4 text-center">
-                                <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg text-[12px] font-bold" style="background: rgba(0,119,255,0.1); color: #0077FF;">{{ $demo['shipped'] }}</span>
-                            </td>
-                            <td class="py-4">
-                                @php
-                                    $demoStyles = [
-                                        'Confirmed' => ['bg' => 'rgba(34,197,94,0.1)', 'color' => '#22C55E'],
-                                        'Pending' => ['bg' => 'rgba(251,165,24,0.1)', 'color' => '#FBA518'],
-                                        'Cancel' => ['bg' => 'rgba(239,68,68,0.1)', 'color' => '#EF4444'],
-                                    ];
-                                    $ds = $demoStyles[$demo['status']];
-                                @endphp
-                                <span class="inline-flex px-3 py-1 rounded-full text-[11px] font-semibold" style="background: {{ $ds['bg'] }}; color: {{ $ds['color'] }};">{{ $demo['status'] }}</span>
-                            </td>
-                            <td class="py-4 text-[13px] font-semibold text-black">${{ number_format($demo['amount'], 2) }}</td>
-                            <td class="py-4 text-[13px] font-medium text-[#8B8E97]">{{ $demo['invoice'] }}</td>
-                            <td class="py-4">
-                                <div class="flex items-center justify-center gap-1">
-                                    <button class="w-7 h-7 rounded-md hover:bg-gray-100 flex items-center justify-center text-[#8B8E97] transition-colors"><iconify-icon icon="solar:trash-bin-2-linear" width="15"></iconify-icon></button>
-                                    <button class="w-7 h-7 rounded-md hover:bg-gray-100 flex items-center justify-center text-[#8B8E97] transition-colors"><iconify-icon icon="solar:pen-linear" width="15"></iconify-icon></button>
-                                    <button class="w-7 h-7 rounded-md hover:bg-gray-100 flex items-center justify-center text-[#8B8E97] transition-colors"><iconify-icon icon="solar:menu-dots-bold" width="15"></iconify-icon></button>
-                                </div>
-                            </td>
+                        <tr>
+                            <td colspan="9" class="py-12 text-center text-[13px] font-medium text-[#8B8E97]">Belum ada data pesanan</td>
                         </tr>
-                        @endforeach
                     @endif
                 </tbody>
             </table>
@@ -309,6 +280,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Real data from controller
+    const monthlyProductData = @json($monthlyProductData);
+    const monthlySalesData = @json($monthlySalesData);
+    const monthlyPurchaseData = @json($monthlyPurchaseData);
+    const dailyLabels = @json($dailyLabels);
+
     const productCtx = document.getElementById('productDetailsChart');
     if (productCtx) {
         new Chart(productCtx, {
@@ -316,9 +293,9 @@ document.addEventListener('DOMContentLoaded', function() {
             data: {
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [
-                    { label: 'Total Stock Items', data: [2200, 1800, 2500, 2100, 2800, 2400, 3800, 2600, 2900, 2300, 2700, 3000], backgroundColor: '#22C55E', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
-                    { label: 'High Stock Items', data: [1800, 1500, 2000, 1700, 2200, 2000, 3200, 2100, 2400, 1900, 2200, 2500], backgroundColor: '#0077FF', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
-                    { label: 'Low Stock Items', data: [800, 600, 1000, 700, 1200, 900, 1800, 1000, 1300, 800, 1100, 1400], backgroundColor: '#FBA518', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 }
+                    { label: 'Total Stock Items', data: monthlyProductData.map(d => d.totalStock), backgroundColor: '#22C55E', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
+                    { label: 'High Stock Items', data: monthlyProductData.map(d => d.highStock), backgroundColor: '#0077FF', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
+                    { label: 'Low Stock Items', data: monthlyProductData.map(d => d.lowStock), backgroundColor: '#FBA518', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 }
                 ]
             },
             options: {
@@ -337,10 +314,10 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(salesCtx, {
             type: 'line',
             data: {
-                labels: ['01 February', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '28 February'],
+                labels: dailyLabels,
                 datasets: [
-                    { label: 'Sales', data: [120,130,110,140,150,135,160,155,170,145,180,190,175,200,195,210,220,215,230,240,235,250,260,275,290,310,330,350], borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 },
-                    { label: 'Purchase', data: [80,85,90,95,100,90,110,105,115,100,120,125,115,130,135,140,145,140,155,150,160,165,170,175,180,190,200,250], borderColor: '#8B5CF6', backgroundColor: 'rgba(139,92,246,0.05)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 }
+                    { label: 'Sales', data: monthlySalesData, borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 },
+                    { label: 'Purchase', data: monthlyPurchaseData, borderColor: '#8B5CF6', backgroundColor: 'rgba(139,92,246,0.05)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 }
                 ]
             },
             options: {

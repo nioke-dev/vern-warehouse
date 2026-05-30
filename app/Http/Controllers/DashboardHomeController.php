@@ -3,66 +3,175 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class DashboardHomeController extends Controller
 {
     public function index()
     {
-        // Sales Activity Stats
-        $toBeShipped = Order::where('status', 'belum lunas')->count() ?: 212;
-        $toBePacked = Order::count() ?: 324;
-        $toBeInvoiced = Order::where('status', 'lunas')->count() ?: 123;
+        // ===== Sales Activity Stats (real counts) =====
+        $toBeShipped = Order::where('status', 'belum lunas')->count();
+        $toBePacked = Order::count();
+        $toBeInvoiced = Order::where('status', 'lunas')->count();
 
-        // Top Selling Category
-        $categories = Category::withCount('products')->get();
-        $topCategories = [];
-        if ($categories->count() > 0) {
-            foreach ($categories as $cat) {
-                $topCategories[] = [
+        // Percentage change vs last month
+        $now = Carbon::now();
+        $thisMonthOrders = Order::whereMonth('created_at', $now->month)->whereYear('created_at', $now->year)->count();
+        $lastMonthOrders = Order::whereMonth('created_at', $now->copy()->subMonth()->month)->whereYear('created_at', $now->copy()->subMonth()->year)->count();
+        $orderChangePercent = $lastMonthOrders > 0 ? round((($thisMonthOrders - $lastMonthOrders) / $lastMonthOrders) * 100, 1) : 0;
+
+        $thisMonthRevenue = Order::whereMonth('created_at', $now->month)->whereYear('created_at', $now->year)->sum('total_amount');
+
+        // ===== Top Selling Category (by total qty sold) =====
+        $totalQtySold = OrderItem::sum('qty') ?: 1;
+        $topCategories = Category::select('categories.id', 'categories.name')
+            ->join('products', 'products.category_id', '=', 'categories.id')
+            ->join('product_variants', 'product_variants.product_id', '=', 'products.id')
+            ->join('order_items', 'order_items.product_variant_id', '=', 'product_variants.id')
+            ->groupBy('categories.id', 'categories.name')
+            ->selectRaw('SUM(order_items.qty) as total_sold')
+            ->orderByDesc('total_sold')
+            ->limit(5)
+            ->get()
+            ->map(function ($cat) use ($totalQtySold) {
+                return [
                     'name' => $cat->name,
-                    'percentage' => $cat->products_count > 0 ? min(100, $cat->products_count * 15) : rand(15, 45),
+                    'percentage' => round(($cat->total_sold / $totalQtySold) * 100),
                 ];
+            })
+            ->toArray();
+
+        // If no order items exist, show categories with product count proportion
+        if (empty($topCategories)) {
+            $totalProducts = Product::count() ?: 1;
+            $topCategories = Category::withCount('products')
+                ->orderByDesc('products_count')
+                ->limit(5)
+                ->get()
+                ->map(fn($cat) => [
+                    'name' => $cat->name,
+                    'percentage' => round(($cat->products_count / $totalProducts) * 100),
+                ])
+                ->toArray();
+        }
+
+        // ===== Top Selling Items (top 6 products by qty sold, with daily breakdown for heatmap) =====
+        $topItemsData = Product::select('products.id', 'products.name')
+            ->join('product_variants', 'product_variants.product_id', '=', 'products.id')
+            ->join('order_items', 'order_items.product_variant_id', '=', 'product_variants.id')
+            ->groupBy('products.id', 'products.name')
+            ->selectRaw('SUM(order_items.qty) as total_sold')
+            ->orderByDesc('total_sold')
+            ->limit(6)
+            ->get();
+
+        $topItems = $topItemsData->pluck('name')->toArray();
+
+        // Build heatmap data: for each top product, get daily sales for last 7 days
+        $heatmapData = [];
+        $startOfWeek = Carbon::now()->startOfWeek(Carbon::SUNDAY);
+        foreach ($topItemsData as $product) {
+            $dailySales = [];
+            for ($d = 0; $d < 7; $d++) {
+                $date = $startOfWeek->copy()->addDays($d);
+                $qty = OrderItem::join('product_variants', 'product_variants.id', '=', 'order_items.product_variant_id')
+                    ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                    ->where('product_variants.product_id', $product->id)
+                    ->whereDate('orders.order_date', $date)
+                    ->sum('order_items.qty');
+                $dailySales[] = (int)$qty;
+            }
+            $heatmapData[$product->name] = $dailySales;
+        }
+
+        // If no top items, use product names from DB
+        if (empty($topItems)) {
+            $topItems = Product::limit(6)->pluck('name')->toArray();
+            foreach ($topItems as $name) {
+                $heatmapData[$name] = [0, 0, 0, 0, 0, 0, 0];
             }
         }
-        if (empty($topCategories)) {
-            $topCategories = [
-                ['name' => 'Ergonomic Office Chair', 'percentage' => 40],
-                ['name' => 'Minimalist Leather Wallet', 'percentage' => 18],
-                ['name' => 'Smartwatch with Fitness Tracking', 'percentage' => 45],
-            ];
-        }
 
-        // Sales Orders
+        // ===== Sales Orders (real, latest 10) =====
         $orders = Order::with('items.variant.product')
             ->orderBy('created_at', 'desc')
             ->limit(10)
             ->get();
 
-        // If no real orders, provide demo data
-        $demoOrders = [];
-        if ($orders->isEmpty()) {
-            $demoOrders = [
-                ['name' => 'Anwar Hussen', 'packed' => 4, 'date' => 'Feb 01, 2025', 'shipped' => 6, 'status' => 'Confirmed', 'amount' => 34.00, 'invoice' => 'INV-000003'],
-                ['name' => 'Tahsan Khan', 'packed' => 3, 'date' => 'Feb 01, 2025', 'shipped' => 9, 'status' => 'Pending', 'amount' => 134.00, 'invoice' => 'INV-000004'],
-                ['name' => 'Hasan Khan', 'packed' => 2, 'date' => 'Feb 01, 2025', 'shipped' => 3, 'status' => 'Cancel', 'amount' => 38.00, 'invoice' => 'INV-000005'],
+        // ===== Chart Data: Total Product Details (monthly stock data for current year) =====
+        $monthlyProductData = [];
+        for ($m = 1; $m <= 12; $m++) {
+            $date = Carbon::create($now->year, $m, 1);
+
+            // Products created up to end of that month
+            $totalProducts = Product::where('created_at', '<=', $date->copy()->endOfMonth())->count();
+
+            // Variants with stock levels
+            $variants = ProductVariant::whereHas('product', function ($q) use ($date) {
+                $q->where('created_at', '<=', $date->copy()->endOfMonth());
+            });
+
+            $totalStock = (clone $variants)->sum('actual_stock');
+            $highStock = (clone $variants)->where('actual_stock', '>', DB::raw('min_stock * 2'))->count();
+            $lowStock = (clone $variants)->where('actual_stock', '<=', 'min_stock')->where('enable_stock_alert', true)->count();
+
+            $monthlyProductData[] = [
+                'totalStock' => (int)$totalStock,
+                'highStock' => (int)$highStock,
+                'lowStock' => (int)$lowStock,
             ];
         }
 
-        // Top Selling Items (product names for heatmap)
-        $topItems = ['T-Shirt', 'Shoes', 'Wallet', 'Cosmetic', 'Electronic', 'Watch'];
+        // ===== Chart Data: Purchase & Sales (daily orders for current month) =====
+        $daysInMonth = $now->daysInMonth;
+        $monthlySalesData = [];
+        $monthlyPurchaseData = [];
+        $dailyLabels = [];
+
+        for ($d = 1; $d <= $daysInMonth; $d++) {
+            $date = Carbon::create($now->year, $now->month, $d);
+            $dailyLabels[] = $d === 1 ? $date->format('d F') : ($d === $daysInMonth ? $date->format('d F') : '');
+
+            // Sales = total_amount of lunas orders on that day
+            $salesAmount = Order::whereDate('order_date', $date)->where('status', 'lunas')->sum('total_amount');
+            $monthlySalesData[] = (int)$salesAmount;
+
+            // Purchase = total cost_price * qty for orders on that day (approximation)
+            $purchaseAmount = OrderItem::join('orders', 'orders.id', '=', 'order_items.order_id')
+                ->join('product_variants', 'product_variants.id', '=', 'order_items.product_variant_id')
+                ->whereDate('orders.order_date', $date)
+                ->selectRaw('SUM(order_items.qty * product_variants.cost_price) as total')
+                ->value('total') ?? 0;
+            $monthlyPurchaseData[] = (int)$purchaseAmount;
+        }
+
+        // Low stock variants for notification bell (reuse from dashboard layout)
+        $lowStockVariants = ProductVariant::where('enable_stock_alert', true)
+            ->whereColumn('actual_stock', '<=', 'min_stock')
+            ->with('product')
+            ->get();
 
         return view('dashboard-home', compact(
             'toBeShipped',
             'toBePacked',
             'toBeInvoiced',
+            'orderChangePercent',
+            'thisMonthRevenue',
             'topCategories',
             'orders',
-            'demoOrders',
-            'topItems'
+            'topItems',
+            'heatmapData',
+            'monthlyProductData',
+            'monthlySalesData',
+            'monthlyPurchaseData',
+            'dailyLabels',
+            'lowStockVariants'
         ));
     }
 }
