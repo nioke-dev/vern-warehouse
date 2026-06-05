@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Welcome Back Vern - Login</title>
+        <title>Selamat Datang Kembali - Masuk</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -380,7 +380,7 @@
                         if (response.ok) {
                             window.location.href = data.redirect || '/dashboard';
                         } else {
-                            this.errorMessage = data.message || 'Email atau password salah. Silakan coba lagi.';
+                            this.errorMessage = 'Email atau kata sandi salah. Silakan coba lagi.';
                         }
                     } else {
                         const text = await response.text();
@@ -391,10 +391,10 @@
                         if (match && match[1]) {
                             exceptionMessage = ': ' + match[1].trim();
                         }
-                        this.errorMessage = `Error Server (${response.status})${exceptionMessage}. Silakan periksa log.`;
+                        this.errorMessage = `Kesalahan Server (${response.status})${exceptionMessage}. Silakan periksa log.`;
                     }
                 } catch (error) {
-                    console.error('Login connection error:', error);
+                    console.error('Kesalahan koneksi masuk:', error);
                     this.errorMessage = 'Tidak dapat terhubung ke server: ' + error.message;
                 } finally {
                     this.loading = false;
@@ -418,8 +418,8 @@
 
                         <!-- Form Content -->
                         <div class="card-body">
-                            <h1 class="card-title">Welcome Back Vern</h1>
-                            <p class="card-subtitle">Welcome back! Please enter your details.</p>
+                            <h1 class="card-title">Selamat Datang Kembali di Vern</h1>
+                            <p class="card-subtitle">Silakan masukkan detail Anda untuk melanjutkan.</p>
 
                             <!-- Error Message -->
                             <div x-show="errorMessage" x-text="errorMessage" class="error-box" style="display: none;"></div>
@@ -439,7 +439,7 @@
                                             x-model="form.email"
                                             type="email"
                                             class="login-input"
-                                            placeholder="Enter your email"
+                                            placeholder="Masukkan alamat email Anda"
                                             required
                                             :disabled="loading"
                                         >
@@ -463,7 +463,7 @@
                                             x-model="form.password"
                                             :type="showPassword ? 'text' : 'password'"
                                             class="login-input"
-                                            placeholder="Enter your password"
+                                            placeholder="Masukkan kata sandi Anda"
                                             required
                                             :disabled="loading"
                                         >
@@ -485,9 +485,9 @@
                                 <div class="form-options">
                                     <label class="checkbox-label">
                                         <input type="checkbox" x-model="saveAccount" class="checkbox-input">
-                                        <span>Save account</span>
+                                        <span>Simpan Akun</span>
                                     </label>
-                                    <a href="#" class="forgot-link">Forgot Password</a>
+                                    <a href="#" class="forgot-link">Lupa Kata Sandi?</a>
                                 </div>
 
                                 <!-- Sign In Button -->
@@ -497,13 +497,13 @@
                                     :disabled="loading"
                                 >
                                     <div x-show="loading" class="spinner" style="display: none;"></div>
-                                    <span x-text="loading ? 'Signing In...' : 'Sign In'">Sign In</span>
+                                    <span x-text="loading ? 'Masuk...' : 'Masuk'">Masuk</span>
                                 </button>
                             </form>
 
                             <!-- Create Account Link -->
                             <p class="create-account">
-                                Don't have an account? <a href="#" class="create-link">Create now</a>
+                                Belum punya akun? <a href="#" class="create-link">Daftar sekarang</a>
                             </p>
                         </div>
                     </div>

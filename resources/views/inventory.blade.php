@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Inventory - Vern Dashboard')
-@section('page_title', 'Inventory')
+@section('title', 'Inventaris - Vern Dashboard')
+@section('page_title', 'Inventaris')
 
 @section('content')
 <!-- Toast Notification Container -->
@@ -31,19 +31,19 @@
 <div class="bg-white rounded-[20px] p-8 border border-black/5 shadow-sm">
     <!-- Header Row -->
     <div class="flex items-center justify-between mb-6">
-        <h2 class="text-[18px] font-bold text-black tracking-[-2%]">Inventory Table</h2>
+        <h2 class="text-[18px] font-bold text-black tracking-[-2%]">Tabel Inventaris</h2>
         
         <div class="flex items-center gap-6">
             <!-- Import From Excel -->
             <button class="flex items-center gap-2 text-sm font-bold text-[#8B8E97] hover:text-black transition-all cursor-pointer">
-                <span>Import From</span>
+                <span>Impor Dari</span>
                 <iconify-icon icon="vscode-icons:file-type-excel" width="20" height="20"></iconify-icon>
             </button>
 
             <!-- Add Product Button -->
             <button onclick="openAddProductModal()" class="flex items-center gap-2 bg-[#0077FF] hover:bg-[#0062D1] text-white px-5 py-3 rounded-[12px] text-sm font-bold transition-all shadow-sm shadow-[#0077FF]/20 cursor-pointer">
                 <iconify-icon icon="material-symbols:add-rounded" width="20" height="20"></iconify-icon>
-                <span>Add Product</span>
+                <span>Tambah Produk</span>
             </button>
         </div>
     </div>
@@ -51,7 +51,7 @@
     <!-- Alert Notice Banner (Figma Exact) -->
     <div class="mb-6 flex items-center gap-3 px-4 py-3 rounded-[10px]" style="background-color: #E8F0FE; border: 1px solid #1D38FF; width: 100%;">
         <iconify-icon icon="material-symbols:info-rounded" class="text-[#1D38FF]" width="20" height="20" style="flex-shrink: 0;"></iconify-icon>
-        <span class="text-[13px] font-semibold text-black tracking-[-1%]">Most products are in good condition. Some items require attention for restocking.</span>
+        <span class="text-[13px] font-semibold text-black tracking-[-1%]">Sebagian besar produk dalam kondisi baik. Beberapa item memerlukan perhatian untuk pengisian ulang stok.</span>
     </div>
 
     <!-- Filter & Search Controls (Part 2) -->
@@ -66,19 +66,19 @@
             <!-- Healthy Pill -->
             <button id="btnFilterHealthy" onclick="selectInventoryFilter('healthy')" class="text-[13px] font-semibold text-[#8B8E97] bg-white hover:bg-gray-50 transition-all cursor-pointer" style="padding: 6px 16px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px;">
                 <span id="dotFilterHealthy" style="width: 6px; height: 6px; border-radius: 50%; background-color: #9CA3AF; display: inline-block; flex-shrink: 0;"></span>
-                <span>Healthy</span>
+                <span>Sehat</span>
             </button>
 
             <!-- Running Low Pill -->
             <button id="btnFilterLow" onclick="selectInventoryFilter('running low')" class="text-[13px] font-semibold text-[#8B8E97] bg-white hover:bg-gray-50 transition-all cursor-pointer" style="padding: 6px 16px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px;">
                 <span id="dotFilterLow" style="width: 6px; height: 6px; border-radius: 50%; background-color: #9CA3AF; display: inline-block; flex-shrink: 0;"></span>
-                <span>Running Low</span>
+                <span>Stok Menipis</span>
             </button>
 
             <!-- Out Of Stock Pill -->
             <button id="btnFilterOut" onclick="selectInventoryFilter('out of stock')" class="text-[13px] font-semibold text-[#8B8E97] bg-white hover:bg-gray-50 transition-all cursor-pointer" style="padding: 6px 16px; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px;">
                 <span id="dotFilterOut" style="width: 6px; height: 6px; border-radius: 50%; background-color: #9CA3AF; display: inline-block; flex-shrink: 0;"></span>
-                <span>Out Of Stock</span>
+                <span>Stok Habis</span>
             </button>
         </div>
 
@@ -88,7 +88,7 @@
             <input 
                 id="inventorySearchInput"
                 type="text" 
-                placeholder="Search" 
+                placeholder="Cari" 
                 class="placeholder:text-[#8B8E97]"
                 style="width: 100%; height: 100%; background: transparent; border: none; outline: none; font-size: 13px; font-weight: 600; color: #000000; padding: 0;"
                 oninput="applyInventoryFilters()"
@@ -302,14 +302,14 @@
                     </th>
                     <th class="col-sticky-2" style="min-width: 240px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Product & Variants</span>
+                            <span>Produk & Varian</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
-                    <th class="col-sticky-3" style="min-width: 112px;">Category</th>
+                    <th class="col-sticky-3" style="min-width: 112px;">Kategori</th>
                     <th class="col-sticky-4" style="min-width: 100px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Grade</span>
+                            <span>Nilai</span>
                             <iconify-icon icon="material-symbols:help-outline" width="14" height="14" class="text-black/30"></iconify-icon>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
@@ -322,25 +322,25 @@
                     </th>
                     <th style="min-width: 120px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Daily Sales</span>
+                            <span>Penjualan Harian</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
                     <th style="min-width: 150px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Monthly Revenue</span>
+                            <span>Pendapatan Bulanan</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
-                    <th style="min-width: 160px;">SKU / Barcode</th>
-                    <th style="min-width: 180px;">Cost & Selling Price</th>
+                    <th style="min-width: 160px;">SKU / Kode Batang</th>
+                    <th style="min-width: 180px;">Harga Beli & Jual</th>
                     <th style="min-width: 130px;">
                         <div class="flex items-center justify-end gap-1 cursor-pointer">
-                            <span>Actual Stock</span>
+                            <span>Stok Aktual</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
-                    <th style="min-width: 100px; padding-right: 24px !important; text-align: center;">Action</th>
+                    <th style="min-width: 100px; padding-right: 24px !important; text-align: center;">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -358,11 +358,11 @@
                             <img src="{{ $product->image_path ?? 'https://images.unsplash.com/photo-1568254183919-78a4f43a2877?w=100&auto=format&fit=crop&q=60' }}" alt="" class="w-10 h-10 rounded-[8px] object-cover border border-black/5" />
                             <div class="flex flex-col">
                                 <span class="font-bold text-black">{{ $product->name }}</span>
-                                <span class="text-[11px] text-gray-400 font-medium">{{ $product->variants->count() }} Variants</span>
+                                <span class="text-[11px] text-gray-400 font-medium">{{ $product->variants->count() }} Varian</span>
                             </div>
                         </div>
                     </td>
-                    <td class="col-sticky-3">{{ $product->category->name ?? 'Uncategorized' }}</td>
+                    <td class="col-sticky-3">{{ $product->category->name ?? 'Tanpa Kategori' }}</td>
                     <td class="col-sticky-4">
                         <span class="grade-badge-{{ strtolower($product->grade) }}">{{ strtoupper($product->grade) }}</span>
                     </td>
@@ -375,7 +375,7 @@
                                   data-daily-sales="{{ $product->daily_sales }}"
                                   data-price="{{ $product->variants->first()->selling_price ?? 0 }}">
                                 <span class="status-dot-figma" style="background-color: #10B981;"></span>
-                                <span>Healthy</span>
+                                <span>Sehat</span>
                             </span>
                         @elseif (strtolower($product->status) === 'running low')
                             <span class="status-low cursor-pointer" onclick="event.stopPropagation(); showStatusPopover(this)"
@@ -385,7 +385,7 @@
                                   data-daily-sales="{{ $product->daily_sales }}"
                                   data-price="{{ $product->variants->first()->selling_price ?? 0 }}">
                                 <span class="status-dot-figma" style="background-color: #0077FF;"></span>
-                                <span>Running Low</span>
+                                <span>Stok Menipis</span>
                             </span>
                         @else
                             <span class="status-out cursor-pointer" onclick="event.stopPropagation(); showStatusPopover(this)"
@@ -395,11 +395,11 @@
                                   data-daily-sales="{{ $product->daily_sales }}"
                                   data-price="{{ $product->variants->first()->selling_price ?? 0 }}">
                                 <span class="status-dot-figma" style="background-color: #FF4D4D;"></span>
-                                <span>Out Of Stock</span>
+                                <span>Stok Habis</span>
                             </span>
                         @endif
                     </td>
-                    <td>{{ $product->daily_sales }} units</td>
+                    <td>{{ $product->daily_sales }} unit</td>
                     <td>Rp{{ number_format($product->monthly_revenue, 0, ',', '.') }}</td>
                     <td class="text-gray-400 text-[11px] font-medium">-</td>
                     <td class="text-gray-400 text-[11px] font-medium">-</td>
@@ -457,7 +457,7 @@
                                   data-daily-sales="{{ $product->daily_sales }}"
                                   data-price="{{ $variant->selling_price }}">
                                 <span class="status-dot-figma" style="background-color: #FF4D4D;"></span>
-                                <span>Out Of Stock</span>
+                                <span>Stok Habis</span>
                             </span>
                         @elseif ($variant->enable_stock_alert && $variant->actual_stock <= $variant->min_stock)
                             <span class="status-low cursor-pointer" onclick="event.stopPropagation(); showStatusPopover(this)"
@@ -467,7 +467,7 @@
                                   data-daily-sales="{{ $product->daily_sales }}"
                                   data-price="{{ $variant->selling_price }}">
                                 <span class="status-dot-figma" style="background-color: #0077FF;"></span>
-                                <span>Running Low</span>
+                                <span>Stok Menipis</span>
                             </span>
                         @else
                             <span class="status-healthy cursor-pointer" onclick="event.stopPropagation(); showStatusPopover(this)"
@@ -477,7 +477,7 @@
                                   data-daily-sales="{{ $product->daily_sales }}"
                                   data-price="{{ $variant->selling_price }}">
                                 <span class="status-dot-figma" style="background-color: #10B981;"></span>
-                                <span>Healthy</span>
+                                <span>Sehat</span>
                             </span>
                         @endif
                     </td>
@@ -491,8 +491,8 @@
                     </td>
                     <td>
                         <div class="flex flex-col text-[11px] leading-tight">
-                            <span class="text-gray-400">Cost: <span class="text-gray-700 font-semibold">Rp{{ number_format($variant->cost_price, 0, ',', '.') }}</span></span>
-                            <span class="text-gray-400">Sell: <span class="text-blue-600 font-bold">Rp{{ number_format($variant->selling_price, 0, ',', '.') }}</span></span>
+                            <span class="text-gray-400">Beli: <span class="text-gray-700 font-semibold">Rp{{ number_format($variant->cost_price, 0, ',', '.') }}</span></span>
+                            <span class="text-gray-400">Jual: <span class="text-blue-600 font-bold">Rp{{ number_format($variant->selling_price, 0, ',', '.') }}</span></span>
                         </div>
                     </td>
                     <td class="text-right" onclick="event.stopPropagation()">
@@ -521,7 +521,7 @@
     <!-- Pagination Footer Controls (Figma Style) -->
     <div class="flex items-center justify-end gap-4 mt-6 pt-4 border-t border-black/5">
         <!-- Page counter -->
-        <span class="text-[12px] font-semibold text-[#8B8E97]">Showing Page 1 of 3</span>
+        <span class="text-[12px] font-semibold text-[#8B8E97]">Menampilkan Halaman 1 dari 3</span>
 
         <!-- Page buttons -->
         <div class="flex items-center gap-2">
@@ -555,7 +555,7 @@
         <!-- Header: Title and Stepper -->
         <div class="flex items-center justify-between mb-4" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-shrink: 0;">
             <div style="display: flex; align-items: center; gap: 24px;">
-                <h3 id="modalTitleText" class="text-black" style="font-size: 20px; font-weight: 700; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;">Add New Product</h3>
+                <h3 id="modalTitleText" class="text-black" style="font-size: 20px; font-weight: 700; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;">Tambah Produk Baru</h3>
                 <!-- Stepper -->
                 <div style="display: flex; align-items: center; gap: 8px;">
                     <div id="stepCircle1" style="width: 24px; height: 24px; border-radius: 50%; background-color: #0077FF; color: #FFFFFF; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; transition: all 0.3s;">1</div>
@@ -578,20 +578,20 @@
             <div id="step1Content" style="display: flex; flex-direction: column; gap: 24px;">
                 <!-- Section 1: Product Details -->
                 <div>
-                    <h4 style="font-size: 11px; font-weight: 700; color: #8B8E97; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 16px 0; font-family: 'Plus Jakarta Sans', sans-serif;">Product Details</h4>
+                    <h4 style="font-size: 11px; font-weight: 700; color: #8B8E97; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 16px 0; font-family: 'Plus Jakarta Sans', sans-serif;">Detail Produk</h4>
                     <div style="display: flex; gap: 24px;">
                         <!-- Left Inputs -->
                         <div style="flex: 1; display: flex; flex-direction: column; gap: 16px;">
                             <!-- Product Name -->
                             <div style="display: flex; flex-direction: column;">
-                                <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Product Name</label>
-                                <input type="text" id="productNameInput" oninput="clearFieldError('productNameInput')" placeholder="Product Name" style="width: 100%; height: 42px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #000000; outline: none; box-sizing: border-box; transition: all 0.2s;" />
+                                <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Nama Produk</label>
+                                <input type="text" id="productNameInput" oninput="clearFieldError('productNameInput')" placeholder="Nama Produk" style="width: 100%; height: 42px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #000000; outline: none; box-sizing: border-box; transition: all 0.2s;" />
                                 <span id="productNameInputError" style="color: #FF4D4D; font-size: 10px; font-weight: 600; display: none; margin-top: 4px; font-family: 'Plus Jakarta Sans', sans-serif;"></span>
                             </div>
                             <!-- Details -->
                             <div style="display: flex; flex-direction: column;">
-                                <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Details</label>
-                                <textarea id="productDetailsInput" placeholder="Details" style="width: 100%; height: 80px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #000000; outline: none; resize: none; box-sizing: border-box;"></textarea>
+                                <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Keterangan</label>
+                                <textarea id="productDetailsInput" placeholder="Keterangan" style="width: 100%; height: 80px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #000000; outline: none; resize: none; box-sizing: border-box;"></textarea>
                             </div>
                         </div>
                         <!-- Right Image Upload -->
@@ -600,14 +600,14 @@
                             <div id="imageUploadContainer" onclick="triggerImageUpload()" style="border: 1px dashed rgba(0, 0, 0, 0.1); border-radius: 12px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background-color: #FFFFFF; padding: 16px; box-sizing: border-box; cursor: pointer; position: relative; overflow: hidden; transition: all 0.2s;">
                                 <div id="uploadPlaceholder" style="display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;">
                                     <iconify-icon icon="solar:camera-add-linear" width="24" height="24" style="color: #8B8E97;"></iconify-icon>
-                                    <span style="font-size: 11px; font-weight: 600; color: #8B8E97; line-height: 1.4;">Select Photo from<br>Computer</span>
-                                    <button type="button" class="transition-all" style="background-color: #000000; color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 6px 20px; border: none; border-radius: 100px; outline: none; pointer-events: none;">Browse</button>
+                                    <span style="font-size: 11px; font-weight: 600; color: #8B8E97; line-height: 1.4;">Pilih Foto dari<br>Komputer</span>
+                                    <button type="button" class="transition-all" style="background-color: #000000; color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 6px 20px; border: none; border-radius: 100px; outline: none; pointer-events: none;">Jelajahi</button>
                                 </div>
                                 <div id="imagePreviewContainer" style="display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0;">
                                     <img id="imagePreview" src="" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; object-position: center;" />
                                     <!-- Hover overlay to change photo -->
                                     <div id="imageHoverOverlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
-                                        <span style="color: #FFFFFF; font-size: 11px; font-weight: 700; background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 100px;">Change Photo</span>
+                                        <span style="color: #FFFFFF; font-size: 11px; font-weight: 700; background: rgba(0,0,0,0.6); padding: 6px 14px; border-radius: 100px;">Ganti Foto</span>
                                     </div>
                                 </div>
                             </div>
@@ -620,9 +620,9 @@
                 <div style="display: flex; gap: 24px;">
                     <!-- Category -->
                     <div style="flex: 1; display: flex; flex-direction: column;">
-                        <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Category</label>
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Kategori</label>
                         <select id="productCategorySelect" onchange="clearFieldError('productCategorySelect')" style="width: 100%; height: 42px; padding: 0 16px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; font-size: 13px; font-weight: 500; color: #000000; outline: none; box-sizing: border-box; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238B8E97%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22m6 9 6 6 6-6%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center; cursor: pointer; transition: all 0.2s;">
-                            <option value="" disabled selected style="color: #8B8E97;">Select Category</option>
+                            <option value="" disabled selected style="color: #8B8E97;">Pilih Kategori</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
@@ -634,7 +634,7 @@
                 <!-- Footer: Add Price Button -->
                 <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
                     <button type="button" onclick="handleStep1Next()" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 12px 32px; border: none; border-radius: 100px; display: flex; align-items: center; gap: 8px; outline: none; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                        <span>Configure Variants</span>
+                        <span>Konfigurasi Varian</span>
                         <iconify-icon icon="solar:alt-arrow-right-linear" width="16" height="16" style="margin-top: 1px;"></iconify-icon>
                     </button>
                 </div>
@@ -644,17 +644,17 @@
             <div id="step2Content" style="display: none; flex-direction: column; gap: 20px;">
                 <!-- Section: Variant Input Area -->
                 <div style="background-color: #F8FAFC; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 16px;">
-                    <h4 style="font-size: 12px; font-weight: 700; color: #000000; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;">Add New Variant Detail</h4>
+                    <h4 style="font-size: 12px; font-weight: 700; color: #000000; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;">Tambah Detail Varian Baru</h4>
                     
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
                         <!-- Variant Name -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Variant Name (e.g. Rasa Coklat, 1kg)</label>
-                            <input type="text" id="varNameInput" placeholder="Name" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Nama Varian (cth. Rasa Coklat, 1kg)</label>
+                            <input type="text" id="varNameInput" placeholder="Nama" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                         <!-- Unit -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Unit</label>
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Satuan</label>
                             <select id="varUnitSelect" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238B8E97%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22m6 9 6 6 6-6%22/></svg>'); background-repeat: no-repeat; background-position: right 10px center;">
                                 <option value="Box">Box</option>
                                 <option value="Pcs" selected>Pcs</option>
@@ -664,34 +664,34 @@
                         </div>
                         <!-- SKU -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">SKU (Will generate if empty)</label>
-                            <input type="text" id="varSkuInput" placeholder="SKU Code" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">SKU (Otomatis jika kosong)</label>
+                            <input type="text" id="varSkuInput" placeholder="Kode SKU" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
                         <!-- Initial Stock -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Initial Stock</label>
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Stok Awal</label>
                             <input type="number" id="varStockInput" placeholder="0" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                         <!-- Expired Date -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Expired Date</label>
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Tanggal Kedaluwarsa</label>
                             <input type="date" id="varExpiredInput" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                         <!-- Cost Price -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Cost Price (Rp)</label>
-                            <input type="number" id="varCostPriceInput" oninput="varCalculateSellingPrice()" placeholder="Buy Price" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Harga Beli (Rp)</label>
+                            <input type="number" id="varCostPriceInput" oninput="varCalculateSellingPrice()" placeholder="Harga Beli" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                     </div>
 
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
                         <!-- Selling Price -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Selling Price (Rp)</label>
-                            <input type="number" id="varSellingPriceInput" oninput="varCalculateMargin()" placeholder="Sell Price" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Harga Jual (Rp)</label>
+                            <input type="number" id="varSellingPriceInput" oninput="varCalculateMargin()" placeholder="Harga Jual" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                         <!-- Margin -->
                         <div style="display: flex; flex-direction: column;">
@@ -700,20 +700,20 @@
                         </div>
                         <!-- Barcode -->
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Barcode (Generated from SKU)</label>
-                            <input type="text" id="varBarcodeInput" readonly placeholder="Generate barcode from SKU" style="height: 38px; background-color: #F1F3F6; cursor: not-allowed; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Kode Batang (Dibuat dari SKU)</label>
+                            <input type="text" id="varBarcodeInput" readonly placeholder="Buat kode batang dari SKU" style="height: 38px; background-color: #F1F3F6; cursor: not-allowed; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                     </div>
 
                     <!-- Min Stock & Alert Toggle -->
                     <div style="display: flex; gap: 24px; align-items: center;">
                         <div style="flex: 1; display: flex; flex-direction: column;">
-                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Min Stock Alert</label>
+                            <label style="font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Peringatan Stok Minimum</label>
                             <input type="number" id="varMinStockInput" placeholder="Min" style="height: 38px; background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; padding: 0 12px; font-size: 12px; outline: none;" />
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px; margin-top: 18px;">
                             <input type="checkbox" id="varAlertToggle" checked style="width: 16px; height: 16px;" />
-                            <label for="varAlertToggle" style="font-size: 11px; font-weight: 700; color: #000000; cursor: pointer;">Enable Alert</label>
+                            <label for="varAlertToggle" style="font-size: 11px; font-weight: 700; color: #000000; cursor: pointer;">Aktifkan Peringatan</label>
                         </div>
                     </div>
 
@@ -723,23 +723,23 @@
                         <div style="flex: 1; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 20px; background-color: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; min-height: 125px; box-sizing: border-box;">
                             <div style="display: flex; flex-direction: column; gap: 6px;">
                                 <span style="font-size: 13px; font-weight: 700; color: #000000; margin: 0; font-family: 'Plus Jakarta Sans', sans-serif;">Vern AI Price Optimization</span>
-                                <p style="font-size: 11px; color: #8B8E97; line-height: 1.4; font-weight: 500; margin: 0;">Get AI-powered price recommendations based on cost, demand, and market trends to maximize your profit.</p>
+                                <p style="font-size: 11px; color: #8B8E97; line-height: 1.4; font-weight: 500; margin: 0;">Dapatkan rekomendasi harga berbasis AI berdasarkan biaya, permintaan, dan tren pasar untuk memaksimalkan keuntungan Anda.</p>
                             </div>
-                            <button type="button" onclick="runAiOptimization()" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 8px 24px; border: none; border-radius: 100px; outline: none; align-self: flex-start;">Generate Optimal Price</button>
+                            <button type="button" onclick="runAiOptimization()" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 8px 24px; border: none; border-radius: 100px; outline: none; align-self: flex-start;">Buat Harga Optimal</button>
                         </div>
                         <!-- Right AI Recommendation Box -->
                         <div style="width: 280px; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 20px; background-color: #FFFFFF; display: flex; flex-direction: column; justify-content: space-between; min-height: 125px; box-sizing: border-box;">
                             <div style="display: flex; flex-direction: column; gap: 12px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-size: 11px; font-weight: 700; color: #8B8E97; text-transform: uppercase;">AI Optimal Price</span>
-                                    <span id="aiDemandBadge" style="display: none; background-color: #E8F0FE; color: #1D38FF; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 100px;">High Demand</span>
+                                    <span style="font-size: 11px; font-weight: 700; color: #8B8E97; text-transform: uppercase;">Harga Optimal AI</span>
+                                    <span id="aiDemandBadge" style="display: none; background-color: #E8F0FE; color: #1D38FF; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 100px;">Permintaan Tinggi</span>
                                 </div>
                                 <div style="display: flex; align-items: baseline; gap: 6px;">
                                     <span id="valRecomPrice" style="font-size: 20px; font-weight: 800; color: #000000; font-family: 'Plus Jakarta Sans', sans-serif;">---</span>
                                     <span id="valRecomMargin" style="font-size: 12px; font-weight: 700; color: #10B981;">---</span>
                                 </div>
                             </div>
-                            <button id="applyRecomPriceBtn" type="button" onclick="applyRecommendation()" class="transition-all cursor-pointer" style="display: none; background-color: #0077FF; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 6px 16px; border: none; border-radius: 100px; outline: none; align-self: flex-start;">Apply Recommendation</button>
+                            <button id="applyRecomPriceBtn" type="button" onclick="applyRecommendation()" class="transition-all cursor-pointer" style="display: none; background-color: #0077FF; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 6px 16px; border: none; border-radius: 100px; outline: none; align-self: flex-start;">Terapkan Rekomendasi</button>
                         </div>
                     </div>
 
@@ -747,12 +747,12 @@
                     <div style="display: flex; gap: 24px; align-items: flex-end; margin-top: 8px;">
                         <!-- Generate Barcode Box -->
                         <div style="flex: 1;">
-                            <label style="display: block; font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Barcode Generator</label>
+                            <label style="display: block; font-size: 11px; font-weight: 700; color: #000000; margin-bottom: 6px;">Pembuat Kode Batang</label>
                             <div id="barcodeContainer" style="background-color: #FFFFFF; border: 1px solid rgba(0,0,0,0.1); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 90px; box-sizing: border-box; transition: all 0.2s; position: relative;">
                                 <!-- Before generation -->
                                 <div id="barcodeBeforeGen" style="display: flex; flex-direction: column; justify-content: space-between; height: 60px; width: 100%;">
-                                    <span style="font-size: 10px; font-weight: 700; color: #8B8E97; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Generate barcode from SKU</span>
-                                    <button onclick="generateBarcode()" type="button" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 6px 16px; border: none; border-radius: 100px; outline: none; align-self: flex-start;">Generate</button>
+                                    <span style="font-size: 10px; font-weight: 700; color: #8B8E97; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">Buat kode batang dari SKU</span>
+                                    <button onclick="generateBarcode()" type="button" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 11px; font-weight: 700; padding: 6px 16px; border: none; border-radius: 100px; outline: none; align-self: flex-start;">Buat</button>
                                 </div>
                                 
                                 <!-- After generation -->
@@ -762,21 +762,21 @@
                                         <!-- Laser scan overlay line -->
                                         <div id="barcodeLaser" style="position: absolute; left: 10%; right: 10%; height: 2px; background-color: #EF4444; box-shadow: 0 0 8px #EF4444; display: none; pointer-events: none; opacity: 0;"></div>
                                     </div>
-                                    <button onclick="generateBarcode(true)" type="button" style="background: transparent; border: none; color: #0077FF; font-size: 10px; font-weight: 700; cursor: pointer; text-decoration: underline; padding: 0; outline: none; margin-top: 4px;">Regenerate</button>
+                                    <button onclick="generateBarcode(true)" type="button" style="background: transparent; border: none; color: #0077FF; font-size: 10px; font-weight: 700; cursor: pointer; text-decoration: underline; padding: 0; outline: none; margin-top: 4px;">Buat Ulang</button>
                                 </div>
                             </div>
                         </div>
                         <!-- Barcode Usecase Card -->
                         <div style="width: 280px;">
                             <div style="border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; padding: 16px; background-color: #FFFFFF; height: 90px; display: flex; flex-direction: column; justify-content: center; gap: 4px; box-sizing: border-box;">
-                                <span style="font-size: 11px; font-weight: 700; color: #000000; margin: 0;">Barcode Usecase</span>
-                                <p style="font-size: 10px; color: #8B8E97; font-weight: 500; margin: 0; line-height: 1.3;">The generated barcode can be printed and used as a product identifier for transactions and stock monitoring.</p>
+                                <span style="font-size: 11px; font-weight: 700; color: #000000; margin: 0;">Kegunaan Kode Batang</span>
+                                <p style="font-size: 10px; color: #8B8E97; font-weight: 500; margin: 0; line-height: 1.3;">Kode batang yang dihasilkan dapat dicetak dan digunakan sebagai pengenal produk untuk transaksi dan pemantauan stok.</p>
                             </div>
                         </div>
                     </div>
 
                     <button type="button" onclick="addVariantToList()" style="align-self: flex-end; background-color: #0077FF; color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 10px 24px; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
-                        + Add Variant to Product
+                        + Tambah Varian ke Produk
                     </button>
                     <span id="variantBuilderError" style="color: #FF4D4D; font-size: 11px; font-weight: 600; display: none;"></span>
                 </div>
@@ -786,16 +786,16 @@
                     <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 11px;">
                         <thead>
                             <tr style="background-color: #F1F3F6; border-bottom: 1px solid rgba(0,0,0,0.05); font-weight: 700;">
-                                <th style="padding: 10px;">Variant Name</th>
+                                <th style="padding: 10px;">Nama Varian</th>
                                 <th style="padding: 10px;">SKU / BC</th>
-                                <th style="padding: 10px;">Stock / Alert</th>
-                                <th style="padding: 10px;">Cost / Sell</th>
-                                <th style="padding: 10px; text-align: center;">Action</th>
+                                <th style="padding: 10px;">Stok / Peringatan</th>
+                                <th style="padding: 10px;">Beli / Jual</th>
+                                <th style="padding: 10px; text-align: center;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="variantsListTableBody">
                             <tr>
-                                <td colspan="5" style="padding: 20px; text-align: center; color: #8B8E97; font-weight: 600;">No variants added yet. Please fill the builder and add a variant.</td>
+                                <td colspan="5" style="padding: 20px; text-align: center; color: #8B8E97; font-weight: 600;">Belum ada varian yang ditambahkan. Silakan isi form dan tambahkan varian.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -806,11 +806,11 @@
                     <!-- Back Button -->
                     <button type="button" onclick="goToStep(1)" class="transition-all cursor-pointer" style="background-color: transparent; border: 1px solid rgba(0,0,0,0.1); color: #8B8E97; font-size: 13px; font-weight: 700; padding: 12px 32px; border-radius: 100px; display: flex; align-items: center; gap: 8px; outline: none;">
                         <iconify-icon icon="solar:alt-arrow-left-linear" width="16" height="16"></iconify-icon>
-                        <span>Back</span>
+                        <span>Kembali</span>
                     </button>
                     <!-- Submit / Save Button -->
                     <button type="button" onclick="handleStep2Submit()" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 12px 32px; border: none; border-radius: 100px; display: flex; align-items: center; gap: 8px; outline: none; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                        <span>Save Product & Variants</span>
+                        <span>Simpan Produk & Varian</span>
                     </button>
                 </div>
             </div>
@@ -832,13 +832,13 @@
 
                 <!-- Text information -->
                 <div style="display: flex; flex-direction: column; gap: 8px; max-width: 320px;">
-                    <h4 style="font-size: 16px; font-weight: 700; color: #000000; margin: 0; line-height: 1.4; font-family: 'Plus Jakarta Sans', sans-serif;">Product added successfully!</h4>
-                    <p style="font-size: 12px; color: #8B8E97; font-weight: 500; margin: 0; line-height: 1.4;">Your product and its variants have been saved into warehouse.</p>
+                    <h4 style="font-size: 16px; font-weight: 700; color: #000000; margin: 0; line-height: 1.4; font-family: 'Plus Jakarta Sans', sans-serif;">Produk berhasil ditambahkan!</h4>
+                    <p style="font-size: 12px; color: #8B8E97; font-weight: 500; margin: 0; line-height: 1.4;">Produk dan variannya telah disimpan ke dalam gudang.</p>
                 </div>
 
                 <!-- See Product Button -->
                 <button type="button" onclick="closeAddProductModal()" class="transition-all cursor-pointer" style="background-color: #000000; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 12px 36px; border: none; border-radius: 100px; outline: none; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-                    See Product
+                    Lihat Produk
                 </button>
             </div>
         </form>
@@ -904,8 +904,8 @@
         const demandBadge = document.getElementById('aiDemandBadge');
         const applyBtn = document.getElementById('applyRecomPriceBtn');
 
-        recomPrice.textContent = "Estimating...";
-        recomMargin.textContent = "Estimating...";
+        recomPrice.textContent = "Memperkirakan...";
+        recomMargin.textContent = "Memperkirakan...";
         applyBtn.style.display = 'none';
 
         setTimeout(() => {
@@ -1131,7 +1131,7 @@
             }
 
             if (!skuValue) {
-                errorSpan.textContent = 'Could not generate a unique SKU after multiple attempts. Please enter one manually.';
+                errorSpan.textContent = 'Tidak dapat membuat SKU unik setelah beberapa percobaan. Silakan masukkan secara manual.';
                 errorSpan.style.display = 'block';
                 if (beforeGenBtn) beforeGenBtn.disabled = false;
                 if (regenBtn) regenBtn.disabled = false;
@@ -1142,7 +1142,7 @@
             // Check manual SKU uniqueness
             const localExists = productVariants.some(v => v.sku.toLowerCase() === skuValue.toLowerCase());
             if (localExists) {
-                errorSpan.textContent = `SKU "${skuValue}" is already added to the list below.`;
+                errorSpan.textContent = `SKU "${skuValue}" sudah ditambahkan ke daftar di bawah.`;
                 errorSpan.style.display = 'block';
                 skuInput.focus();
                 if (beforeGenBtn) beforeGenBtn.disabled = false;
@@ -1154,7 +1154,7 @@
                 const res = await fetch(`/products/check-sku?sku=${encodeURIComponent(skuValue)}`);
                 const data = await res.json();
                 if (data.exists) {
-                    errorSpan.textContent = `SKU "${skuValue}" already exists in the database. Please choose a unique SKU.`;
+                    errorSpan.textContent = `SKU "${skuValue}" sudah ada di database. Silakan gunakan SKU yang unik.`;
                     errorSpan.style.display = 'block';
                     skuInput.focus();
                     if (beforeGenBtn) beforeGenBtn.disabled = false;
@@ -1443,7 +1443,7 @@
 
         // Validation for builder
         if (!nameInput.value.trim()) {
-            errorSpan.textContent = 'Variant name is required.';
+            errorSpan.textContent = 'Nama varian produk wajib diisi.';
             errorSpan.style.display = 'block';
             nameInput.focus();
             return;
@@ -1451,7 +1451,7 @@
 
         const cost = parseFloat(costPriceInput.value);
         if (isNaN(cost) || cost <= 0) {
-            errorSpan.textContent = 'Cost price must be greater than 0.';
+            errorSpan.textContent = 'Harga beli harus lebih dari 0.';
             errorSpan.style.display = 'block';
             costPriceInput.focus();
             return;
@@ -1459,14 +1459,14 @@
 
         const sell = parseFloat(sellingPriceInput.value);
         if (isNaN(sell) || sell <= 0) {
-            errorSpan.textContent = 'Selling price must be greater than 0.';
+            errorSpan.textContent = 'Harga jual harus lebih dari 0.';
             errorSpan.style.display = 'block';
             sellingPriceInput.focus();
             return;
         }
 
         if (sell < cost) {
-            errorSpan.textContent = 'Selling price cannot be less than cost price.';
+            errorSpan.textContent = 'Harga jual tidak boleh kurang dari harga beli.';
             errorSpan.style.display = 'block';
             sellingPriceInput.focus();
             return;
@@ -1474,7 +1474,7 @@
 
         const margin = parseFloat(marginInput.value);
         if (isNaN(margin) || margin < 0) {
-            errorSpan.textContent = 'Margin percent is required.';
+            errorSpan.textContent = 'Persentase margin wajib diisi.';
             errorSpan.style.display = 'block';
             marginInput.focus();
             return;
@@ -1482,7 +1482,7 @@
 
         const stock = parseInt(stockInput.value);
         if (isNaN(stock) || stock < 0) {
-            errorSpan.textContent = 'Initial stock must be at least 0.';
+            errorSpan.textContent = 'Stok awal minimal harus 0.';
             errorSpan.style.display = 'block';
             stockInput.focus();
             return;
@@ -1490,7 +1490,7 @@
 
         const minStock = parseInt(minStockInput.value);
         if (isNaN(minStock) || minStock < 0) {
-            errorSpan.textContent = 'Min stock alert level must be at least 0.';
+            errorSpan.textContent = 'Level peringatan stok minimum minimal harus 0.';
             errorSpan.style.display = 'block';
             minStockInput.focus();
             return;
@@ -1499,22 +1499,22 @@
         // Require SKU and Barcode to be present/generated
         let skuVal = skuInput.value.trim();
         if (!skuVal) {
-            errorSpan.textContent = 'Please enter or generate a SKU code first.';
+            errorSpan.textContent = 'Silakan masukkan atau buat kode SKU terlebih dahulu.';
             errorSpan.style.display = 'block';
             skuInput.focus();
             return;
         }
         let bcVal = barcodeInput.value.trim();
         if (!bcVal) {
-            errorSpan.textContent = 'Please generate the barcode first before adding the variant.';
+            errorSpan.textContent = 'Silakan buat barcode terlebih dahulu sebelum menambahkan varian.';
             errorSpan.style.display = 'block';
             return;
         }
 
-        // 1. Check local uniqueness (already added in current modal variants list)
+        // 1. Periksa keunikan lokal (sudah ditambahkan di daftar varian modal saat ini)
         const localExists = productVariants.some(v => v.sku.toLowerCase() === skuVal.toLowerCase());
         if (localExists) {
-            errorSpan.textContent = `SKU "${skuVal}" has already been added to the variants list below.`;
+            errorSpan.textContent = `SKU "${skuVal}" sudah ditambahkan ke daftar varian di bawah.`;
             errorSpan.style.display = 'block';
             skuInput.focus();
             return;
@@ -1524,13 +1524,13 @@
         const saveBtn = document.querySelector('button[onclick="addVariantToList()"]');
         const originalBtnText = saveBtn.innerHTML;
         saveBtn.disabled = true;
-        saveBtn.textContent = 'Checking SKU...';
+        saveBtn.textContent = 'Memeriksa SKU...';
 
         try {
             const res = await fetch(`/products/check-sku?sku=${encodeURIComponent(skuVal)}`);
             const data = await res.json();
             if (data.exists) {
-                errorSpan.textContent = `SKU "${skuVal}" already exists in the warehouse database. Please use a unique SKU.`;
+                errorSpan.textContent = `SKU "${skuVal}" sudah ada di database gudang. Silakan gunakan SKU yang unik.`;
                 errorSpan.style.display = 'block';
                 skuInput.focus();
                 saveBtn.disabled = false;
@@ -1590,7 +1590,7 @@
         if (productVariants.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="5" style="padding: 20px; text-align: center; color: #8B8E97; font-weight: 600;">No variants added yet. Please fill the builder and add a variant.</td>
+                    <td colspan="5" style="padding: 20px; text-align: center; color: #8B8E97; font-weight: 600;">Belum ada varian yang ditambahkan. Silakan isi formulir dan tambahkan varian.</td>
                 </tr>
             `;
             return;
@@ -1766,7 +1766,7 @@
 
         const nameVal = document.getElementById('productNameInput').value.trim();
         if (nameVal.length < 3) {
-            showFieldError('productNameInput', 'Product Name must be at least 3 characters.');
+            showFieldError('productNameInput', 'Nama produk minimal harus 3 karakter.');
             isValid = false;
         } else {
             clearFieldError('productNameInput');
@@ -1774,7 +1774,7 @@
 
         const categoryVal = document.getElementById('productCategorySelect').value;
         if (!categoryVal) {
-            showFieldError('productCategorySelect', 'Please select a category.');
+            showFieldError('productCategorySelect', 'Silakan pilih kategori.');
             isValid = false;
         } else {
             clearFieldError('productCategorySelect');
@@ -1792,7 +1792,7 @@
     function handleStep2Submit() {
         if (productVariants.length === 0) {
             const errorSpan = document.getElementById('variantBuilderError');
-            errorSpan.textContent = 'Please add at least one variant before saving.';
+            errorSpan.textContent = 'Silakan tambahkan setidaknya satu varian sebelum menyimpan.';
             errorSpan.style.display = 'block';
             return;
         }
@@ -1832,7 +1832,7 @@
         const saveBtn = document.querySelector('#step2Content button[onclick="handleStep2Submit()"]');
         const originalBtnText = saveBtn.innerHTML;
         saveBtn.disabled = true;
-        saveBtn.textContent = 'Saving...';
+        saveBtn.textContent = 'Menyimpan...';
 
         fetch('/products', {
             method: 'POST',
@@ -1870,8 +1870,8 @@
                     };
                 }
             } else if (data.errors) {
-                // Parse server-side validation error mapping
-                let errorMsg = 'Validation failed: ';
+                // Parsing pemetaan error validasi di sisi server
+                let errorMsg = 'Validasi gagal: ';
                 Object.keys(data.errors).forEach(key => {
                     errorMsg += '\nâ€¢ ' + data.errors[key][0];
                 });
@@ -1882,7 +1882,7 @@
             saveBtn.disabled = false;
             saveBtn.innerHTML = originalBtnText;
             console.error('Submission failed:', err);
-            showToast(err.message || 'Failed to save product. Please check connection or contact admin.', 'error');
+            showToast(err.message || 'Gagal menyimpan produk. Silakan periksa koneksi atau hubungi admin.', 'error');
         });
     }
 
@@ -1971,12 +1971,12 @@
                 <div style="width: 25%; background-color: #FFD29D;"></div>
             `;
             labels.innerHTML = `
-                <span>Current Stock</span>
-                <span>Safe Zone Stock</span>
-                <span>Incoming Stock</span>
+                <span>Stok Saat Ini</span>
+                <span>Stok Zona Aman</span>
+                <span>Stok Masuk</span>
             `;
-            title.textContent = 'Your stock level is healthy';
-            subtitle.textContent = 'Current inventory is sufficient to meet demand.';
+            title.textContent = 'Tingkat stok Anda sehat';
+            subtitle.textContent = 'Inventaris saat ini cukup untuk memenuhi permintaan.';
         } else if (status === 'running low') {
             const daysLeft = dailySales > 0 ? Math.ceil(stock / dailySales) : 5;
             progressBar.innerHTML = `
@@ -1985,12 +1985,12 @@
                 <div style="width: 35%; background-color: #FFEDD5;"></div>
             `;
             labels.innerHTML = `
-                <span>Current Stock</span>
-                <span>Safe Zone Stock</span>
-                <span>Incoming Stock</span>
+                <span>Stok Saat Ini</span>
+                <span>Stok Zona Aman</span>
+                <span>Stok Masuk</span>
             `;
-            title.textContent = 'You are running low on stock';
-            subtitle.textContent = `This item will run out in ${daysLeft} days, based on recent sales.`;
+            title.textContent = 'Stok Anda hampir habis';
+            subtitle.textContent = `Item ini akan habis dalam ${daysLeft} hari, berdasarkan penjualan terkini.`;
         } else {
             const daysOut = 3;
             const lostSalesQty = dailySales > 0 ? (dailySales * daysOut) : 3;
@@ -2003,12 +2003,12 @@
                 <div style="width: 30%; background-color: #FF8F00;"></div>
             `;
             labels.innerHTML = `
-                <span>Actual Stock</span>
-                <span>GAP Stock</span>
-                <span>Incoming Stock</span>
+                <span>Stok Aktual</span>
+                <span>Stok CELAH</span>
+                <span>Stok Masuk</span>
             `;
-            title.textContent = 'You may be losing sales due to unavailable inventory';
-            subtitle.textContent = `Out of stock for ${daysOut} days. Estimated lost sales ${formattedLostSales}.`;
+            title.textContent = 'Anda mungkin kehilangan penjualan karena inventaris tidak tersedia';
+            subtitle.textContent = `Habis selama ${daysOut} hari. Perkiraan penjualan yang hilang ${formattedLostSales}.`;
         }
 
         // Show popover to calculate dimensions

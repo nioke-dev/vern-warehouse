@@ -23,7 +23,7 @@
             
             <button onclick="showToast('Fitur Add Integration sedang dipersiapkan!', 'success')" class="flex items-center gap-2 bg-[#0077FF] hover:bg-[#0062D1] text-white px-5 py-3 rounded-[12px] text-sm font-bold transition-all shadow-sm shadow-[#0077FF]/20 cursor-pointer border-0">
                 <iconify-icon icon="material-symbols:add-rounded" width="20" height="20"></iconify-icon>
-                <span>Add Integrations</span>
+                <span>Tambah Integrasi</span>
             </button>
         </div>
 
@@ -70,7 +70,7 @@
                     </div>
                     <div class="px-6 py-4 border-t border-black/5 bg-white flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <button onclick="showIntegrationDetail('Moka Pos', 'Sinkronisasi transaksi pos real-time dengan Moka POS.')" class="text-xs font-bold text-gray-500 hover:text-black transition-all bg-white border border-black/10 px-3 py-1.5 rounded-lg cursor-pointer">Detail</button>
+                            <button onclick="showIntegrationDetail('Moka Pos', 'Sinkronisasi transaksi kasir real-time dengan Moka POS.')" class="text-xs font-bold text-gray-500 hover:text-black transition-all bg-white border border-black/10 px-3 py-1.5 rounded-lg cursor-pointer">Detail</button>
                             <button onclick="confirmDeleteIntegration('Moka Pos')" class="text-xs font-bold px-3 py-1.5 rounded-lg cursor-pointer transition-all" style="color: #FF4D4D; border: 1px solid #FFE0E0; background-color: #FFFFFF;">Hapus Integrasi</button>
                         </div>
                         <!-- Toggle Switch -->
