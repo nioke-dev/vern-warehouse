@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Dashboard - Vern')
-@section('page_title', 'Dashboard')
+@section('title', 'Dasbor - Vern')
+@section('page_title', 'Dasbor')
 
 @section('content')
 <div class="flex flex-col gap-6">
@@ -12,7 +12,7 @@
         <!-- Sales Activity -->
         <div class="bg-white rounded-[16px] border border-black/5 p-6">
             <div class="flex items-center justify-between mb-5">
-                <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Sales Activity</h3>
+                <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Aktivitas Penjualan</h3>
                 <button class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors text-gray-400">
                     <iconify-icon icon="solar:menu-dots-bold" width="18" height="18"></iconify-icon>
                 </button>
@@ -22,7 +22,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
                 <!-- To be Shipped -->
                 <div class="bg-[#F8F9FB] rounded-[12px] p-4 flex flex-col">
-                    <p class="text-[11px] font-medium text-[#8B8E97] mb-2">To be Shipped</p>
+                    <p class="text-[11px] font-medium text-[#8B8E97] mb-2">Akan Dikirim</p>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBeShipped }}</span>
                         <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full whitespace-nowrap" style="color: {{ $orderChangePercent >= 0 ? '#22C55E' : '#EF4444' }}; background: {{ $orderChangePercent >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)' }};">{{ $orderChangePercent >= 0 ? '↑' : '↓' }}{{ $orderChangePercent >= 0 ? '+' : '' }}{{ $orderChangePercent }}%</span>
@@ -37,7 +37,7 @@
 
                 <!-- To be Packed -->
                 <div class="bg-[#F8F9FB] rounded-[12px] p-4 flex flex-col">
-                    <p class="text-[11px] font-medium text-[#8B8E97] mb-2">To be Packed</p>
+                    <p class="text-[11px] font-medium text-[#8B8E97] mb-2">Akan Dikemas</p>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBePacked }}</span>
                         <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full whitespace-nowrap" style="color: {{ $orderChangePercent >= 0 ? '#22C55E' : '#EF4444' }}; background: {{ $orderChangePercent >= 0 ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)' }};">{{ $orderChangePercent >= 0 ? '↑' : '↓' }}{{ $orderChangePercent >= 0 ? '+' : '' }}{{ $orderChangePercent }}%</span>
@@ -52,7 +52,7 @@
 
                 <!-- To be Invoiced -->
                 <div class="bg-[#F8F9FB] rounded-[12px] p-4 flex flex-col">
-                    <p class="text-[11px] font-medium text-[#8B8E97] mb-2">To be Invoiced</p>
+                    <p class="text-[11px] font-medium text-[#8B8E97] mb-2">Akan Difaktur</p>
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-[24px] font-bold text-black leading-none">{{ $toBeInvoiced }}</span>
                         @php $invoicePercent = $toBePacked > 0 ? round(($toBeInvoiced / $toBePacked) * 100) : 0; @endphp
@@ -71,14 +71,14 @@
             </div>
 
             <div class="flex items-center gap-5 mt-4 pl-2 text-[10px] font-medium text-[#8B8E97]">
-                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+                <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span>
             </div>
         </div>
 
         <!-- Top Sellings Category -->
         <div class="bg-white rounded-[16px] border border-black/5 p-6" x-data="{ period: 'month' }">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-[14px] font-bold text-black tracking-[-0.03em]">Top Sellings Category</h3>
+                <h3 class="text-[14px] font-bold text-black tracking-[-0.03em]">Kategori Terlaris</h3>
                 <button class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors text-gray-400">
                     <iconify-icon icon="solar:menu-dots-bold" width="16" height="16"></iconify-icon>
                 </button>
@@ -86,9 +86,9 @@
 
             <!-- Period Tabs -->
             <div class="flex items-center bg-[#F3F4F6] rounded-lg p-1 mb-5">
-                <button @click="period = 'week'" :class="period === 'week' ? 'bg-white shadow-sm text-black' : 'text-[#8B8E97]'" class="flex-1 py-1.5 rounded-md text-[11px] font-semibold transition-all">Week</button>
-                <button @click="period = 'month'" :class="period === 'month' ? 'bg-white shadow-sm text-black' : 'text-[#8B8E97]'" class="flex-1 py-1.5 rounded-md text-[11px] font-semibold transition-all">Month</button>
-                <button @click="period = 'year'" :class="period === 'year' ? 'bg-white shadow-sm text-black' : 'text-[#8B8E97]'" class="flex-1 py-1.5 rounded-md text-[11px] font-semibold transition-all">Year</button>
+                <button @click="period = 'week'" :class="period === 'week' ? 'bg-white shadow-sm text-black' : 'text-[#8B8E97]'" class="flex-1 py-1.5 rounded-md text-[11px] font-semibold transition-all">Minggu</button>
+                <button @click="period = 'month'" :class="period === 'month' ? 'bg-white shadow-sm text-black' : 'text-[#8B8E97]'" class="flex-1 py-1.5 rounded-md text-[11px] font-semibold transition-all">Bulan</button>
+                <button @click="period = 'year'" :class="period === 'year' ? 'bg-white shadow-sm text-black' : 'text-[#8B8E97]'" class="flex-1 py-1.5 rounded-md text-[11px] font-semibold transition-all">Tahun</button>
             </div>
 
             <!-- Category Bars -->
@@ -111,7 +111,7 @@
         <!-- Top Selling Items Heatmap -->
         <div class="bg-white rounded-[16px] border border-black/5 p-6">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-[14px] font-bold text-black tracking-[-0.03em]">Top Selling Items</h3>
+                <h3 class="text-[14px] font-bold text-black tracking-[-0.03em]">Produk Terlaris</h3>
                 <button class="w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors text-gray-400">
                     <iconify-icon icon="solar:menu-dots-bold" width="16" height="16"></iconify-icon>
                 </button>
@@ -137,7 +137,7 @@
                                 elseif ($qty >= 5) $hColor = '#0077FF';
                                 else $hColor = '#E8F5E9';
                             @endphp
-                            <div style="flex: 1; height: 20px; border-radius: 3px; background: {{ $hColor }};" title="{{ $qty }} sold"></div>
+                            <div style="flex: 1; height: 20px; border-radius: 3px; background: {{ $hColor }};" title="{{ $qty }} terjual"></div>
                         @endfor
                     </div>
                 </div>
@@ -146,7 +146,7 @@
 
             <!-- Day Labels -->
             <div class="flex" style="gap: 4px; margin-top: 6px; padding-left: 63px;">
-                @foreach(['S', 'M', 'T', 'W', 'T', 'F', 'S'] as $day)
+                @foreach(['M', 'S', 'S', 'R', 'K', 'J', 'S'] as $day)
                     <span style="flex: 1; text-align: center; font-size: 9px; font-weight: 500; color: #8B8E97;">{{ $day }}</span>
                 @endforeach
             </div>
@@ -159,17 +159,17 @@
         <!-- Total Product Details - Bar Chart -->
         <div class="bg-white rounded-[16px] border border-black/5 p-6">
             <div class="flex items-center justify-between mb-2">
-                <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Total Product Details</h3>
+                <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Detail Total Produk</h3>
                 <div class="flex items-center gap-2 bg-[#F8F9FB] rounded-lg px-3 py-1.5 text-[12px] font-medium text-[#8B8E97] cursor-pointer">
                     <iconify-icon icon="solar:calendar-linear" width="14" height="14"></iconify-icon>
-                    This Years
+                    Tahun Ini
                     <iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
                 </div>
             </div>
             <div class="flex items-center gap-4 mb-4">
-                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #22C55E;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Total Stock Items</span></div>
-                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #0077FF;"></div><span class="text-[11px] font-medium text-[#8B8E97]">High Stock Items</span></div>
-                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #FBA518;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Low Stock Items</span></div>
+                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #22C55E;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Total Item Stok</span></div>
+                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #0077FF;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Stok Tinggi</span></div>
+                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #FBA518;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Stok Rendah</span></div>
             </div>
             <div style="height: 220px; position: relative;">
                 <canvas id="productDetailsChart"></canvas>
@@ -179,16 +179,16 @@
         <!-- Purchase & Sales - Line Chart -->
         <div class="bg-white rounded-[16px] border border-black/5 p-6">
             <div class="flex items-center justify-between mb-2">
-                <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Purchase & Sales</h3>
+                <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Pembelian & Penjualan</h3>
                 <div class="flex items-center gap-2 bg-[#F8F9FB] rounded-lg px-3 py-1.5 text-[12px] font-medium text-[#8B8E97] cursor-pointer">
                     <iconify-icon icon="solar:calendar-linear" width="14" height="14"></iconify-icon>
-                    This Month
+                    Bulan Ini
                     <iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
                 </div>
             </div>
             <div class="flex items-center gap-4 mb-4">
-                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #22C55E;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Sales</span></div>
-                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #8B5CF6;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Purchase</span></div>
+                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #22C55E;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Penjualan</span></div>
+                <div class="flex items-center gap-1.5"><div style="width: 10px; height: 10px; border-radius: 50%; background: #8B5CF6;"></div><span class="text-[11px] font-medium text-[#8B8E97]">Pembelian</span></div>
             </div>
             <div style="height: 220px; position: relative;">
                 <canvas id="purchaseSalesChart"></canvas>
@@ -199,10 +199,10 @@
     <!-- Row 3: Sales Order Table -->
     <div class="bg-white rounded-[16px] border border-black/5 p-6">
         <div class="flex items-center justify-between mb-6">
-            <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Sales Order</h3>
+            <h3 class="text-[16px] font-bold text-black tracking-[-0.03em]">Pesanan Penjualan</h3>
             <div class="flex items-center gap-2 bg-[#F8F9FB] rounded-lg px-3 py-1.5 text-[12px] font-medium text-[#8B8E97] cursor-pointer">
                 <iconify-icon icon="solar:calendar-linear" width="14" height="14"></iconify-icon>
-                This Years
+                Tahun Ini
                 <iconify-icon icon="solar:alt-arrow-down-linear" width="14" height="14"></iconify-icon>
             </div>
         </div>
@@ -212,14 +212,14 @@
                 <thead>
                     <tr class="text-left border-b border-black/5">
                         <th class="pb-3 pl-3 w-10"><input type="checkbox" class="w-4 h-4 rounded border-gray-300 accent-[#0077FF]" /></th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Customers Name</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97] text-center">Packed</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Date</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97] text-center">Shipped</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Order Status</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Amount</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Invoiced</th>
-                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97] text-center">Action</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Nama Pelanggan</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97] text-center">Dikemas</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Tanggal</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97] text-center">Dikirim</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Status Pesanan</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Jumlah</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97]">Difaktur</th>
+                        <th class="pb-3 text-[12px] font-semibold text-[#8B8E97] text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -245,9 +245,9 @@
                             <td class="py-4">
                                 @php
                                     $statusStyles = [
-                                        'lunas' => ['label' => 'Confirmed', 'bg' => 'rgba(34,197,94,0.1)', 'color' => '#22C55E'],
-                                        'belum lunas' => ['label' => 'Pending', 'bg' => 'rgba(251,165,24,0.1)', 'color' => '#FBA518'],
-                                        'batal' => ['label' => 'Cancel', 'bg' => 'rgba(239,68,68,0.1)', 'color' => '#EF4444'],
+                                        'lunas' => ['label' => 'Dikonfirmasi', 'bg' => 'rgba(34,197,94,0.1)', 'color' => '#22C55E'],
+                                        'belum lunas' => ['label' => 'Tertunda', 'bg' => 'rgba(251,165,24,0.1)', 'color' => '#FBA518'],
+                                        'batal' => ['label' => 'Dibatalkan', 'bg' => 'rgba(239,68,68,0.1)', 'color' => '#EF4444'],
                                     ];
                                     $s = $statusStyles[$order->status] ?? $statusStyles['belum lunas'];
                                 @endphp
@@ -291,11 +291,11 @@ document.addEventListener('DOMContentLoaded', function() {
         new Chart(productCtx, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
                 datasets: [
-                    { label: 'Total Stock Items', data: monthlyProductData.map(d => d.totalStock), backgroundColor: '#22C55E', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
-                    { label: 'High Stock Items', data: monthlyProductData.map(d => d.highStock), backgroundColor: '#0077FF', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
-                    { label: 'Low Stock Items', data: monthlyProductData.map(d => d.lowStock), backgroundColor: '#FBA518', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 }
+                    { label: 'Total Item Stok', data: monthlyProductData.map(d => d.totalStock), backgroundColor: '#22C55E', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
+                    { label: 'Stok Tinggi', data: monthlyProductData.map(d => d.highStock), backgroundColor: '#0077FF', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 },
+                    { label: 'Stok Rendah', data: monthlyProductData.map(d => d.lowStock), backgroundColor: '#FBA518', borderRadius: 3, barPercentage: 0.55, categoryPercentage: 0.7 }
                 ]
             },
             options: {
@@ -316,8 +316,8 @@ document.addEventListener('DOMContentLoaded', function() {
             data: {
                 labels: dailyLabels,
                 datasets: [
-                    { label: 'Sales', data: monthlySalesData, borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 },
-                    { label: 'Purchase', data: monthlyPurchaseData, borderColor: '#8B5CF6', backgroundColor: 'rgba(139,92,246,0.05)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 }
+                    { label: 'Penjualan', data: monthlySalesData, borderColor: '#22C55E', backgroundColor: 'rgba(34,197,94,0.08)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 },
+                    { label: 'Pembelian', data: monthlyPurchaseData, borderColor: '#8B5CF6', backgroundColor: 'rgba(139,92,246,0.05)', tension: 0.4, fill: true, borderWidth: 2, pointRadius: 0, pointHoverRadius: 5 }
                 ]
             },
             options: {

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>@yield('title', 'Vern Dashboard')</title>
+        <title>@yield('title', 'Vern Dasbor')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,7 +55,7 @@
                     </span>
                     <input 
                         type="text" 
-                        placeholder="Search" 
+                        placeholder="Cari" 
                         class="w-full h-10 bg-[#FAFAFA] border border-black/5 rounded-[10px] pl-10 pr-4 text-[13px] font-medium text-[#292D32] placeholder:text-[#A0AEC0] focus:outline-none focus:border-[#0077FF] transition-all"
                     />
                 </div>
@@ -72,42 +72,42 @@
                         <li>
                             <a href="{{ route('dashboard.home') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 {{ Route::currentRouteName() === 'dashboard.home' ? 'bg-[#0077FF]/10 text-[#0077FF]' : 'text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black' }}">
                                 <iconify-icon icon="material-symbols:home-rounded" width="20" height="20"></iconify-icon>
-                                <span>Home</span>
+                                <span>Beranda</span>
                             </a>
                         </li>
                         <!-- Inventory -->
                         <li>
                             <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 {{ Route::currentRouteName() === 'dashboard' ? 'bg-[#0077FF]/10 text-[#0077FF]' : 'text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black' }}">
                                 <iconify-icon icon="material-symbols:inventory-2-rounded" width="20" height="20"></iconify-icon>
-                                <span>Inventory</span>
+                                <span>Inventaris</span>
                             </a>
                         </li>
                         <!-- Orders -->
                         <li>
                             <a href="{{ route('orders') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 {{ Route::currentRouteName() === 'orders' ? 'bg-[#0077FF]/10 text-[#0077FF]' : 'text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black' }}">
                                 <iconify-icon icon="solar:notes-bold" width="20" height="20"></iconify-icon>
-                                <span>Orders</span>
+                                <span>Pesanan</span>
                             </a>
                         </li>
                         <!-- Warehouse -->
                         <li>
                             <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black">
                                 <iconify-icon icon="material-symbols:warehouse" width="20" height="20"></iconify-icon>
-                                <span>Warehouse</span>
+                                <span>Gudang</span>
                             </a>
                         </li>
                         <!-- Purchase Order -->
                         <li>
                             <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black">
                                 <iconify-icon icon="mdi:truck" width="20" height="20"></iconify-icon>
-                                <span>Purchase Order</span>
+                                <span>Pesanan Pembelian</span>
                             </a>
                         </li>
                         <!-- Integrations -->
                         <li>
                             <a href="{{ route('integrations') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 {{ Route::currentRouteName() === 'integrations' ? 'bg-[#0077FF]/10 text-[#0077FF]' : 'text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black' }}">
                                 <iconify-icon icon="solar:widget-bold" width="20" height="20"></iconify-icon>
-                                <span>Integrations</span>
+                                <span>Integrasi</span>
                             </a>
                         </li>
                     </ul>
@@ -122,21 +122,21 @@
                         <li>
                             <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black">
                                 <iconify-icon icon="solar:user-bold" width="20" height="20"></iconify-icon>
-                                <span>Business Profile</span>
+                                <span>Profil Bisnis</span>
                             </a>
                         </li>
                         <!-- Subscription -->
                         <li>
                             <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black">
                                 <iconify-icon icon="icon-park-solid:buy" width="20" height="20"></iconify-icon>
-                                <span>Subscription</span>
+                                <span>Langganan</span>
                             </a>
                         </li>
                         <!-- Settings -->
                         <li>
                             <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-[10px] text-[14px] font-semibold transition-all duration-200 text-[#B3B3B3] hover:bg-[#FAFAFA] hover:text-black">
                                 <iconify-icon icon="solar:settings-bold" width="20" height="20"></iconify-icon>
-                                <span>Settings</span>
+                                <span>Pengaturan</span>
                             </a>
                         </li>
                     </ul>
@@ -147,7 +147,7 @@
             <div class="px-6 py-6 border-t border-black/5 mt-auto">
                 <div class="bg-[#F3F4F6] rounded-[12px] p-4 flex flex-col gap-1">
                     <span class="text-sm font-bold text-black">GulungJaya</span>
-                    <span class="text-[10px] font-medium text-[#8B8E97]">Premium User - Until 30 June 2026</span>
+                    <span class="text-[10px] font-medium text-[#8B8E97]">Pengguna Premium - Hingga 30 Juni 2026</span>
                 </div>
             </div>
         </aside>
@@ -157,7 +157,7 @@
             <!-- Top Bar Header -->
             <header class="h-[80px] bg-white border-b border-black/5 px-10 flex items-center justify-between sticky top-0 z-40">
                 <!-- Page Title -->
-                <h1 class="text-[24px] font-bold text-black tracking-[-3%]">@yield('page_title', 'Inventory')</h1>
+                <h1 class="text-[24px] font-bold text-black tracking-[-3%]">@yield('page_title', 'Inventaris')</h1>
 
                 <!-- Right Side: User Menu & Notifications -->
                 <div class="flex items-center gap-4">
@@ -204,7 +204,7 @@
 
                             @if(isset($lowStockVariants) && count($lowStockVariants) > 0)
                                 <div class="mt-4 pt-4 border-t border-black/5 flex justify-between items-center">
-                                    <button onclick="markAllNotificationsAsRead()" class="text-[11px] font-bold text-gray-400 hover:text-[#0077FF] bg-transparent border-0 cursor-pointer p-0">Tanda semua telah dibaca</button>
+                                    <button onclick="markAllNotificationsAsRead()" class="text-[11px] font-bold text-gray-400 hover:text-[#0077FF] bg-transparent border-0 cursor-pointer p-0">Tandai semua telah dibaca</button>
                                 </div>
                             @endif
                         </div>
