@@ -23,3 +23,6 @@ yarn-error.log
 /.vscode
 /.zed
 /public/assets/images/photos/hero-man3.png
+
+# Crash dumps
+*.stackdump

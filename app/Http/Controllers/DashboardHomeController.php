@@ -15,6 +15,10 @@ class DashboardHomeController extends Controller
 {
     public function index()
     {
+        // User yang sedang login — dipakai untuk memfilter query raw join
+        // (query raw join tidak terkena Global Scope per-user otomatis).
+        $userId = auth()->id();
+
         // ===== Sales Activity Stats (real counts) =====
         $toBeShipped = Order::where('status', 'belum lunas')->count();
         $toBePacked = Order::count();
@@ -29,11 +33,12 @@ class DashboardHomeController extends Controller
         $thisMonthRevenue = Order::whereMonth('created_at', $now->month)->whereYear('created_at', $now->year)->sum('total_amount');
 
         // ===== Top Selling Category (by total qty sold) =====
-        $totalQtySold = OrderItem::sum('qty') ?: 1;
+        $totalQtySold = OrderItem::whereHas('order')->sum('qty') ?: 1;
         $topCategories = Category::select('categories.id', 'categories.name')
             ->join('products', 'products.category_id', '=', 'categories.id')
             ->join('product_variants', 'product_variants.product_id', '=', 'products.id')
             ->join('order_items', 'order_items.product_variant_id', '=', 'product_variants.id')
+            ->where('products.user_id', $userId)
             ->groupBy('categories.id', 'categories.name')
             ->selectRaw('SUM(order_items.qty) as total_sold')
             ->orderByDesc('total_sold')
@@ -65,6 +70,7 @@ class DashboardHomeController extends Controller
         $topItemsData = Product::select('products.id', 'products.name')
             ->join('product_variants', 'product_variants.product_id', '=', 'products.id')
             ->join('order_items', 'order_items.product_variant_id', '=', 'product_variants.id')
+            ->where('products.user_id', $userId)
             ->groupBy('products.id', 'products.name')
             ->selectRaw('SUM(order_items.qty) as total_sold')
             ->orderByDesc('total_sold')
@@ -83,6 +89,7 @@ class DashboardHomeController extends Controller
                 $qty = OrderItem::join('product_variants', 'product_variants.id', '=', 'order_items.product_variant_id')
                     ->join('orders', 'orders.id', '=', 'order_items.order_id')
                     ->where('product_variants.product_id', $product->id)
+                    ->where('orders.user_id', $userId)
                     ->whereDate('orders.order_date', $date)
                     ->sum('order_items.qty');
                 $dailySales[] = (int)$qty;
@@ -145,6 +152,7 @@ class DashboardHomeController extends Controller
             // Purchase = total cost_price * qty for orders on that day (approximation)
             $purchaseAmount = OrderItem::join('orders', 'orders.id', '=', 'order_items.order_id')
                 ->join('product_variants', 'product_variants.id', '=', 'order_items.product_variant_id')
+                ->where('orders.user_id', $userId)
                 ->whereDate('orders.order_date', $date)
                 ->selectRaw('SUM(order_items.qty * product_variants.cost_price) as total')
                 ->value('total') ?? 0;
@@ -154,6 +162,7 @@ class DashboardHomeController extends Controller
         // Low stock variants for notification bell (reuse from dashboard layout)
         $lowStockVariants = ProductVariant::where('enable_stock_alert', true)
             ->whereColumn('actual_stock', '<=', 'min_stock')
+            ->whereHas('product')
             ->with('product')
             ->get();
 

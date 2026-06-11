@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductVariant extends Model
 {
+    use BelongsToUser;
+
     protected $fillable = [
+        'user_id',
         'product_id',
         'variant_name',
         'variant_unit',

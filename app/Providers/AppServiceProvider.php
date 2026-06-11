@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         // Share low stock variants with dashboard layout
         \Illuminate\Support\Facades\View::composer('layouts.dashboard', function ($view) {
             $lowStockVariants = \App\Models\ProductVariant::with('product')
+                ->whereHas('product') // batasi ke produk milik user yang login
                 ->whereRaw('actual_stock <= min_stock')
                 ->where('enable_stock_alert', true)
                 ->get();

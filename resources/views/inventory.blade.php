@@ -620,7 +620,10 @@
                 <div style="display: flex; gap: 24px;">
                     <!-- Category -->
                     <div style="flex: 1; display: flex; flex-direction: column;">
-                        <label style="display: block; font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Kategori</label>
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                            <label style="font-size: 12px; font-weight: 700; color: #000000;">Kategori</label>
+                            <button type="button" onclick="addCategory()" class="cursor-pointer" style="background: none; border: none; color: #1053D5; font-size: 11px; font-weight: 700; padding: 0; outline: none;">+ Tambah Kategori</button>
+                        </div>
                         <select id="productCategorySelect" onchange="clearFieldError('productCategorySelect')" style="width: 100%; height: 42px; padding: 0 16px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; font-size: 13px; font-weight: 500; color: #000000; outline: none; box-sizing: border-box; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%238B8E97%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22m6 9 6 6 6-6%22/></svg>'); background-repeat: no-repeat; background-position: right 16px center; cursor: pointer; transition: all 0.2s;">
                             <option value="" disabled selected style="color: #8B8E97;">Pilih Kategori</option>
                             @foreach ($categories as $category)
@@ -630,6 +633,48 @@
                         <span id="productCategorySelectError" style="color: #FF4D4D; font-size: 10px; font-weight: 600; display: none; margin-top: 4px; font-family: 'Plus Jakarta Sans', sans-serif;"></span>
                     </div>
                 </div>
+
+                <script>
+                    // Tambah kategori baru milik user yang sedang login.
+                    async function addCategory() {
+                        const name = window.prompt('Nama kategori baru:');
+                        if (name === null) return; // dibatalkan
+                        const trimmed = name.trim();
+                        if (!trimmed) return;
+
+                        const token = document.querySelector('input[name="_token"]')?.value || '';
+                        try {
+                            const res = await fetch('{{ route('categories.store') }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': token,
+                                    'Accept': 'application/json'
+                                },
+                                body: JSON.stringify({ name: trimmed })
+                            });
+                            const data = await res.json();
+
+                            if (!res.ok) {
+                                const msg = data?.errors?.name?.[0] || data?.message || 'Gagal menambah kategori.';
+                                alert(msg);
+                                return;
+                            }
+
+                            // Tambahkan ke dropdown lalu pilih otomatis.
+                            const select = document.getElementById('productCategorySelect');
+                            const option = document.createElement('option');
+                            option.value = data.category.id;
+                            option.textContent = data.category.name;
+                            select.appendChild(option);
+                            select.value = data.category.id;
+                            clearFieldError('productCategorySelect');
+                        } catch (e) {
+                            console.error('Gagal menambah kategori:', e);
+                            alert('Tidak dapat terhubung ke server.');
+                        }
+                    }
+                </script>
 
                 <!-- Footer: Add Price Button -->
                 <div style="display: flex; justify-content: flex-end; margin-top: 16px;">

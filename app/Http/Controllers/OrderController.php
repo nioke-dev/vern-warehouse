@@ -9,8 +9,10 @@ class OrderController extends Controller
     public function index()
     {
         $orders = \App\Models\Order::with('items.variant.product')->orderBy('order_date', 'desc')->get();
-        // Load variants with parent product for the selection list
-        $variants = \App\Models\ProductVariant::with('product')->get();
+        // Load variants with parent product for the selection list.
+        // whereHas('product') memastikan hanya varian milik user yang login
+        // (Global Scope produk ikut diterapkan di subquery ini).
+        $variants = \App\Models\ProductVariant::whereHas('product')->with('product')->get();
         return view('orders', compact('orders', 'variants'));
     }
 

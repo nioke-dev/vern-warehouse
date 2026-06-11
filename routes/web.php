@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 Route::view('/', 'welcome')->name('home');
 Route::view('/tentang-kami', 'about')->name('about');
@@ -40,6 +43,40 @@ Route::post('/login', function (Request $request) {
     ])->onlyInput('email');
 });
 
+Route::view('/register', 'register')->name('register');
+
+Route::post('/register', function (Request $request) {
+    $validated = $request->validate([
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+        'password' => ['required', 'confirmed', Password::min(6)],
+    ]);
+
+    $user = User::create([
+        'name' => $validated['name'],
+        'email' => $validated['email'],
+        'password' => Hash::make($validated['password']),
+    ]);
+
+    Auth::login($user);
+    $request->session()->regenerate();
+
+    // Beri kategori awal untuk user baru (milik mereka sendiri).
+    // user_id otomatis terisi oleh trait BelongsToUser karena sudah login.
+    foreach (['Frozen Food', 'Snacks', 'Bakery'] as $categoryName) {
+        \App\Models\Category::create(['name' => $categoryName]);
+    }
+
+    if ($request->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'redirect' => route('dashboard'),
+        ]);
+    }
+
+    return redirect()->intended('/dashboard');
+});
+
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PackageOrderController;
@@ -54,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [InventoryController::class, 'index'])->name('dashboard');
     Route::get('/products/check-sku', [InventoryController::class, 'checkSku'])->name('products.check-sku');
     Route::post('/products', [InventoryController::class, 'store'])->name('products.store');
+    Route::post('/categories', [InventoryController::class, 'storeCategory'])->name('categories.store');
     Route::get('/orders', [OrderController::class, 'index'])->name('orders');
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::post('/orders/{orderId}/mark-as-paid', [OrderController::class, 'markAsPaid'])->name('orders.mark-as-paid');

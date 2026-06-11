@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Selamat Datang Kembali - Masuk</title>
+        <title>Daftar Akun Baru - Vern</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,9 +21,7 @@
         <style>
             /* ===== PAGE LAYOUT ===== */
             .login-page {
-                height: 100vh;
-                max-height: 100vh;
-                overflow: hidden;
+                min-height: 100vh;
                 background-color: #EEF2F8;
                 display: flex;
                 align-items: center;
@@ -40,7 +38,6 @@
                 padding-left: max(0px, calc((100vw - 1100px - 40px) / 2));
             }
 
-            /* ===== LEFT SIDE ===== */
             .left-side {
                 display: flex;
                 align-items: center;
@@ -48,7 +45,6 @@
                 flex-shrink: 0;
             }
 
-            /* ===== LOGIN CARD ===== */
             .login-card {
                 width: 467px;
                 position: relative;
@@ -58,7 +54,6 @@
                 overflow: hidden;
             }
 
-            /* Gradient border using mask technique (supports border-radius) */
             .login-card::before {
                 content: '';
                 position: absolute;
@@ -66,11 +61,11 @@
                 border-radius: 12px;
                 padding: 2px;
                 background: linear-gradient(180deg, #D5F1E6 0%, #F3F3F2 50%, #F3F3F2 100%);
-                -webkit-mask: 
-                    linear-gradient(#fff 0 0) content-box, 
+                -webkit-mask:
+                    linear-gradient(#fff 0 0) content-box,
                     linear-gradient(#fff 0 0);
-                mask: 
-                    linear-gradient(#fff 0 0) content-box, 
+                mask:
+                    linear-gradient(#fff 0 0) content-box,
                     linear-gradient(#fff 0 0);
                 -webkit-mask-composite: xor;
                 mask-composite: exclude;
@@ -78,22 +73,20 @@
                 z-index: 1;
             }
 
-            /* Logo area */
             .logo-area {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 32px 20px 20px;
+                padding: 32px 20px 16px;
             }
 
             .vern-logo {
-                width: 72px;
-                height: 72px;
+                width: 64px;
+                height: 64px;
                 object-fit: contain;
                 filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.12));
             }
 
-            /* White form area */
             .card-body {
                 padding: 4px 28px 28px;
             }
@@ -114,7 +107,6 @@
                 margin-bottom: 20px;
             }
 
-            /* ===== ERROR BOX ===== */
             .error-box {
                 background: #FEF2F2;
                 border: 1px solid #FECACA;
@@ -125,7 +117,6 @@
                 margin-bottom: 16px;
             }
 
-            /* ===== FORM ===== */
             .login-form {
                 display: flex;
                 flex-direction: column;
@@ -205,43 +196,6 @@
                 background: rgba(0, 0, 0, 0.04);
             }
 
-            /* ===== FORM OPTIONS ===== */
-            .form-options {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 18px;
-            }
-
-            .checkbox-label {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 12px;
-                color: #6A7686;
-                cursor: pointer;
-            }
-
-            .checkbox-input {
-                width: 15px;
-                height: 15px;
-                accent-color: #1053D5;
-                border-radius: 3px;
-                cursor: pointer;
-            }
-
-            .forgot-link {
-                font-size: 12px;
-                font-weight: 600;
-                color: #292D32;
-                text-decoration: none;
-            }
-
-            .forgot-link:hover {
-                text-decoration: underline;
-            }
-
-            /* ===== SIGN IN BUTTON ===== */
             .btn-signin {
                 width: 100%;
                 height: 44px;
@@ -256,6 +210,7 @@
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
+                margin-top: 4px;
                 transition: all 200ms ease;
             }
 
@@ -287,13 +242,12 @@
                 to { transform: rotate(360deg); }
             }
 
-            /* ===== CREATE ACCOUNT ===== */
             .create-account {
                 text-align: center;
                 font-size: 12px;
                 color: #6A7686;
                 margin: 0;
-                margin-top: 20px;
+                margin-top: 18px;
             }
 
             .create-link {
@@ -306,15 +260,12 @@
                 text-decoration: underline;
             }
 
-            /* ===== RIGHT SIDE ===== */
             .right-side {
                 flex: 1;
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
                 min-height: 0;
-                height: 100%;
-                max-height: calc(100vh - 40px);
             }
 
             .right-panel-image {
@@ -323,10 +274,8 @@
                 max-height: calc(100vh - 40px);
                 border-radius: 16px;
                 object-fit: contain;
-                box-shadow: none;
             }
 
-            /* ===== RESPONSIVE ===== */
             @media (max-width: 1024px) {
                 .login-container {
                     flex-direction: column;
@@ -352,19 +301,29 @@
     <body class="font-['Plus_Jakarta_Sans']">
         <main class="login-page" x-data="{
             form: {
+                name: '',
                 email: '',
-                password: ''
+                password: '',
+                password_confirmation: ''
             },
             showPassword: false,
             loading: false,
             errorMessage: '',
-            saveAccount: false,
-            async handleLogin() {
-                this.loading = true;
+            async handleRegister() {
                 this.errorMessage = '';
-                
+
+                if (this.form.password !== this.form.password_confirmation) {
+                    this.errorMessage = 'Konfirmasi kata sandi tidak cocok.';
+                    return;
+                }
+                if (this.form.password.length < 6) {
+                    this.errorMessage = 'Kata sandi minimal 6 karakter.';
+                    return;
+                }
+
+                this.loading = true;
                 try {
-                    const response = await fetch('{{ route('login') }}', {
+                    const response = await fetch('{{ route('register') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -373,28 +332,25 @@
                         },
                         body: JSON.stringify(this.form)
                     });
-                    
+
                     const contentType = response.headers.get('content-type');
                     if (contentType && contentType.includes('application/json')) {
                         const data = await response.json();
                         if (response.ok) {
                             window.location.href = data.redirect || '/dashboard';
+                        } else if (data.errors) {
+                            const first = Object.values(data.errors)[0];
+                            this.errorMessage = Array.isArray(first) ? first[0] : first;
                         } else {
-                            this.errorMessage = 'Email atau kata sandi salah. Silakan coba lagi.';
+                            this.errorMessage = data.message || 'Pendaftaran gagal. Silakan coba lagi.';
                         }
                     } else {
                         const text = await response.text();
                         console.error('Server error response:', text);
-                        
-                        let exceptionMessage = '';
-                        const match = text.match(/<title>(.*?)<\/title>/i);
-                        if (match && match[1]) {
-                            exceptionMessage = ': ' + match[1].trim();
-                        }
-                        this.errorMessage = `Kesalahan Server (${response.status})${exceptionMessage}. Silakan periksa log.`;
+                        this.errorMessage = `Kesalahan Server (${response.status}). Silakan periksa log.`;
                     }
                 } catch (error) {
-                    console.error('Kesalahan koneksi masuk:', error);
+                    console.error('Kesalahan koneksi daftar:', error);
                     this.errorMessage = 'Tidak dapat terhubung ke server: ' + error.message;
                 } finally {
                     this.loading = false;
@@ -402,30 +358,41 @@
             }
         }">
             <div class="login-container">
-                <!-- LEFT SIDE: Login Card -->
+                <!-- LEFT SIDE: Register Card -->
                 <div class="left-side">
                     <div class="login-card">
-                        <!-- Logo area -->
                         <div class="logo-area">
                             <a href="{{ route('home') }}" wire:navigate>
-                                <img 
-                                    src="{{ asset('assets/images/logos/vern-logo.png') }}" 
-                                    class="vern-logo" 
+                                <img
+                                    src="{{ asset('assets/images/logos/vern-logo.png') }}"
+                                    class="vern-logo"
                                     alt="Vern Logo"
                                 >
                             </a>
                         </div>
 
-                        <!-- Form Content -->
                         <div class="card-body">
-                            <h1 class="card-title">Selamat Datang Kembali di Vern</h1>
-                            <p class="card-subtitle">Silakan masukkan detail Anda untuk melanjutkan.</p>
+                            <h1 class="card-title">Buat Akun Vern Baru</h1>
+                            <p class="card-subtitle">Daftar untuk mulai mengelola gudang Anda sendiri.</p>
 
-                            <!-- Error Message -->
                             <div x-show="errorMessage" x-text="errorMessage" class="error-box" style="display: none;"></div>
 
-                            <form @submit.prevent="handleLogin" class="login-form">
-                                <!-- Email Field -->
+                            <form @submit.prevent="handleRegister" class="login-form">
+                                <!-- Name -->
+                                <div class="form-group">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-icon">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5">
+                                                <path d="M12 12a4 4 0 100-8 4 4 0 000 8zM4 20c0-3.3 3.6-6 8-6s8 2.7 8 6" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </span>
+                                        <input x-model="form.name" type="text" class="login-input"
+                                            placeholder="Masukkan nama Anda" required :disabled="loading">
+                                    </div>
+                                </div>
+
+                                <!-- Email -->
                                 <div class="form-group">
                                     <label class="form-label">Email</label>
                                     <div class="input-wrapper">
@@ -435,18 +402,12 @@
                                                 <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                         </span>
-                                        <input
-                                            x-model="form.email"
-                                            type="email"
-                                            class="login-input"
-                                            placeholder="Masukkan alamat email Anda"
-                                            required
-                                            :disabled="loading"
-                                        >
+                                        <input x-model="form.email" type="email" class="login-input"
+                                            placeholder="Masukkan alamat email Anda" required :disabled="loading">
                                     </div>
                                 </div>
 
-                                <!-- Password Field -->
+                                <!-- Password -->
                                 <div class="form-group">
                                     <label class="form-label">Password</label>
                                     <div class="input-wrapper">
@@ -454,25 +415,11 @@
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5">
                                                 <path d="M6 10V8C6 4.69 7 2 12 2C17 2 18 4.69 18 8V10" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M17 22H7C3 22 2 21 2 17V15C2 11 3 10 7 10H17C21 10 22 11 22 15V17C22 21 21 22 17 22Z" stroke-linecap="round" stroke-linejoin="round"/>
-                                                <path d="M15.9965 16H16.0054" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                                <path d="M11.9955 16H12.0045" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-                                                <path d="M7.99451 16H8.00349" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
                                             </svg>
                                         </span>
-                                        <input
-                                            x-model="form.password"
-                                            :type="showPassword ? 'text' : 'password'"
-                                            class="login-input"
-                                            placeholder="Masukkan kata sandi Anda"
-                                            required
-                                            :disabled="loading"
-                                        >
-                                        <button
-                                            @click="showPassword = !showPassword"
-                                            type="button"
-                                            class="password-toggle"
-                                            :disabled="loading"
-                                        >
+                                        <input x-model="form.password" :type="showPassword ? 'text' : 'password'"
+                                            class="login-input" placeholder="Minimal 6 karakter" required :disabled="loading">
+                                        <button @click="showPassword = !showPassword" type="button" class="password-toggle" :disabled="loading">
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5">
                                                 <path d="M15.58 12C15.58 13.98 13.98 15.58 12 15.58C10.02 15.58 8.42 13.98 8.42 12C8.42 10.02 10.02 8.42 12 8.42C13.98 8.42 15.58 10.02 15.58 12Z" stroke-linecap="round" stroke-linejoin="round"/>
                                                 <path d="M12 20.27C15.53 20.27 18.82 18.19 21.11 14.59C22.01 13.18 22.01 10.81 21.11 9.4C18.82 5.8 15.53 3.72 12 3.72C8.47 3.72 5.18 5.8 2.89 9.4C1.99 10.81 1.99 13.18 2.89 14.59C5.18 18.19 8.47 20.27 12 20.27Z" stroke-linecap="round" stroke-linejoin="round"/>
@@ -481,35 +428,35 @@
                                     </div>
                                 </div>
 
-                                <!-- Save Account + Forgot Password -->
-                                <div class="form-options">
-                                    <label class="checkbox-label">
-                                        <input type="checkbox" x-model="saveAccount" class="checkbox-input">
-                                        <span>Simpan Akun</span>
-                                    </label>
-                                    <a href="#" class="forgot-link">Lupa Kata Sandi?</a>
+                                <!-- Confirm Password -->
+                                <div class="form-group">
+                                    <label class="form-label">Konfirmasi Password</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-icon">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5">
+                                                <path d="M6 10V8C6 4.69 7 2 12 2C17 2 18 4.69 18 8V10" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M17 22H7C3 22 2 21 2 17V15C2 11 3 10 7 10H17C21 10 22 11 22 15V17C22 21 21 22 17 22Z" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </span>
+                                        <input x-model="form.password_confirmation" :type="showPassword ? 'text' : 'password'"
+                                            class="login-input" placeholder="Ulangi kata sandi Anda" required :disabled="loading">
+                                    </div>
                                 </div>
 
-                                <!-- Sign In Button -->
-                                <button
-                                    type="submit"
-                                    class="btn-signin"
-                                    :disabled="loading"
-                                >
+                                <button type="submit" class="btn-signin" :disabled="loading">
                                     <div x-show="loading" class="spinner" style="display: none;"></div>
-                                    <span x-text="loading ? 'Masuk...' : 'Masuk'">Masuk</span>
+                                    <span x-text="loading ? 'Mendaftar...' : 'Daftar'">Daftar</span>
                                 </button>
                             </form>
 
-                            <!-- Create Account Link -->
                             <p class="create-account">
-                                Belum punya akun? <a href="{{ route('register') }}" class="create-link">Daftar sekarang</a>
+                                Sudah punya akun? <a href="{{ route('login') }}" class="create-link">Masuk di sini</a>
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- RIGHT SIDE: Full image panel -->
+                <!-- RIGHT SIDE -->
                 <div class="right-side">
                     <img
                         src="{{ asset('assets/images/backgrounds/dashboard-preview.png') }}"

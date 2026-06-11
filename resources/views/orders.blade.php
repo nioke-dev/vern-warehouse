@@ -1,19 +1,19 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Orders - Vern Dashboard')
-@section('page_title', 'Orders')
+@section('title', 'Pesanan - Vern Dashboard')
+@section('page_title', 'Pesanan')
 
 @section('content')
 <div class="bg-white rounded-[20px] p-8 border border-black/5 shadow-sm">
     <!-- Header Row -->
     <div class="flex items-center justify-between mb-6">
-        <h2 class="text-[18px] font-bold text-black tracking-[-2%]">Orders</h2>
+        <h2 class="text-[18px] font-bold text-black tracking-[-2%]">Pesanan</h2>
         
         <div class="flex items-center gap-6">
             <!-- Add Transaction Button -->
             <button onclick="openTransactionModal()" class="flex items-center gap-2 bg-[#0077FF] hover:bg-[#0062D1] text-white px-5 py-3 rounded-[12px] text-sm font-bold transition-all shadow-sm shadow-[#0077FF]/20 cursor-pointer">
                 <iconify-icon icon="material-symbols:add-rounded" width="20" height="20"></iconify-icon>
-                <span>Add Transaction</span>
+                <span>Tambah Transaksi</span>
             </button>
         </div>
     </div>
@@ -42,7 +42,7 @@
             <input 
                 id="ordersSearchInput"
                 type="text" 
-                placeholder="Search" 
+                placeholder="Cari" 
                 class="placeholder:text-[#8B8E97]"
                 style="width: 100%; height: 100%; background: transparent; border: none; outline: none; font-size: 13px; font-weight: 600; color: #000000; padding: 0;"
                 oninput="applyOrdersFilters()"
@@ -135,13 +135,13 @@
                     </th>
                     <th style="min-width: 150px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Order Id</span>
+                            <span>ID Pesanan</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
                     <th style="min-width: 150px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Total Order</span>
+                            <span>Total Pesanan</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
@@ -153,7 +153,7 @@
                     </th>
                     <th style="min-width: 180px;">
                         <div class="flex items-center gap-1 cursor-pointer">
-                            <span>Customer</span>
+                            <span>Pelanggan</span>
                             <iconify-icon icon="tabler:arrows-sort" width="14" height="14" class="text-black/30"></iconify-icon>
                         </div>
                     </th>
@@ -194,7 +194,7 @@
                             $itemsData = [];
                             foreach ($order->items as $item) {
                                 $itemsData[] = [
-                                    'product_name' => $item->variant->product->name ?? 'Unknown Product',
+                                    'product_name' => $item->variant->product->name ?? 'Produk Tidak Dikenal',
                                     'variant_name' => $item->variant->variant_name ?? '',
                                     'image_path' => $item->variant->product->image_path ?? null,
                                     'price' => (float)$item->price,
@@ -223,7 +223,7 @@
 
     <!-- Pagination Footer -->
     <div class="flex items-center justify-end gap-4 mt-6 pt-4 border-t border-black/5">
-        <span class="text-[12px] font-semibold text-[#8B8E97]">Showing Page 1 of 3</span>
+        <span class="text-[12px] font-semibold text-[#8B8E97]">Menampilkan Halaman 1 dari 3</span>
         <div class="flex items-center gap-2">
             <button class="w-8 h-8 flex items-center justify-center border border-black/10 rounded-[6px] text-gray-400 bg-white hover:bg-gray-50 transition-all cursor-not-allowed" disabled>
                 <iconify-icon icon="solar:alt-arrow-left-linear" width="16" height="16"></iconify-icon>
@@ -354,7 +354,7 @@
         const showEnd = Math.min(ordersCurrentPage * ordersPerPage, totalRows);
         
         footer.innerHTML = `
-            <span class="text-[12px] font-semibold text-[#8B8E97]">Showing ${showStart}-${showEnd} of ${totalRows} entries</span>
+            <span class="text-[12px] font-semibold text-[#8B8E97]">Menampilkan ${showStart}-${showEnd} dari ${totalRows} data</span>
             <div class="flex items-center gap-2">
                 <button onclick="changeOrdersPage(-1)" ${ordersCurrentPage === 1 ? 'disabled style="cursor: not-allowed; opacity: 0.5;"' : 'style="cursor: pointer;"'} class="w-8 h-8 flex items-center justify-center border border-black/10 rounded-[6px] text-gray-400 bg-white hover:bg-gray-50 transition-all border-0">
                     <iconify-icon icon="solar:alt-arrow-left-linear" width="16" height="16"></iconify-icon>
@@ -499,13 +499,13 @@
             <!-- STEP 1: Customer Details -->
             <div id="txStep1Content" style="display: flex; flex-direction: column; gap: 20px;">
                 <div>
-                    <h4 style="font-size: 11px; font-weight: 700; color: #8B8E97; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 16px 0; font-family: 'Plus Jakarta Sans', sans-serif;">Informasi Customer</h4>
+                    <h4 style="font-size: 11px; font-weight: 700; color: #8B8E97; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 16px 0; font-family: 'Plus Jakarta Sans', sans-serif;">Informasi Pelanggan</h4>
                     <p style="font-size: 12px; color: #8B8E97; margin: 0 0 20px 0; line-height: 1.4;">Tambahkan data customer untuk mempermudah pencatatan transaksi dan histori pembelian.</p>
                     
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
                         <div style="display: flex; flex-direction: column;">
-                            <label style="font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Nama Customer</label>
-                            <input type="text" id="txCustomerName" placeholder="Nama Customer" style="width: 100%; height: 42px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #000000; outline: none; box-sizing: border-box; transition: all 0.2s;" />
+                            <label style="font-size: 12px; font-weight: 700; color: #000000; margin-bottom: 6px;">Nama Pelanggan</label>
+                            <input type="text" id="txCustomerName" placeholder="Nama Pelanggan" style="width: 100%; height: 42px; background-color: #F1F3F6; border: 1px solid transparent; border-radius: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #000000; outline: none; box-sizing: border-box; transition: all 0.2s;" />
                             <span id="txCustomerNameError" style="color: #FF4D4D; font-size: 10px; font-weight: 600; display: none; margin-top: 4px;"></span>
                         </div>
                         <div style="display: flex; flex-direction: column;">
@@ -628,7 +628,7 @@
 
                     <!-- Customer Summary Info -->
                     <div style="background-color: #FAFAFA; border-radius: 16px; padding: 16px; border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
-                        <span style="font-size: 11px; font-weight: 800; color: #8B8E97; text-transform: uppercase; tracking-wider: 0.05em;">Informasi Customer</span>
+                        <span style="font-size: 11px; font-weight: 800; color: #8B8E97; text-transform: uppercase; tracking-wider: 0.05em;">Informasi Pelanggan</span>
                         <div style="display: flex; flex-direction: column; gap: 4px; font-size: 13px;">
                             <div style="display: flex; justify-content: space-between;"><span style="color: #8B8E97; font-weight: 500;">Nama Pembeli</span><span id="txSummaryName" style="color: #000000; font-weight: 700;"></span></div>
                             <div style="display: flex; justify-content: space-between;"><span style="color: #8B8E97; font-weight: 500;">Nomor Handphone</span><span id="txSummaryPhone" style="color: #000000; font-weight: 700;"></span></div>
@@ -682,9 +682,9 @@
         <div class="premium-scrollbar" style="flex: 1; overflow-y: auto; padding-right: 8px; min-height: 0; display: flex; flex-direction: column; gap: 20px;">
             <!-- Customer Information Card -->
             <div style="background-color: #FAFAFA; border-radius: 16px; padding: 16px; border: 1px solid rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px;">
-                <span style="font-size: 11px; font-weight: 800; color: #8B8E97; text-transform: uppercase; tracking-wider: 0.05em;">Informasi Pembeli</span>
+                <span style="font-size: 11px; font-weight: 800; color: #8B8E97; text-transform: uppercase; tracking-wider: 0.05em;">Informasi Pelanggan</span>
                 <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px;">
-                    <div style="display: flex; justify-content: space-between;"><span style="color: #8B8E97; font-weight: 500;">Nama Customer</span><span id="detailCustomerName" style="color: #000000; font-weight: 700;"></span></div>
+                    <div style="display: flex; justify-content: space-between;"><span style="color: #8B8E97; font-weight: 500;">Nama Pelanggan</span><span id="detailCustomerName" style="color: #000000; font-weight: 700;"></span></div>
                     <div style="display: flex; justify-content: space-between;"><span style="color: #8B8E97; font-weight: 500;">Tanggal Order</span><span id="detailOrderDate" style="color: #000000; font-weight: 700;"></span></div>
                     <div style="display: flex; justify-content: space-between;">
                         <span style="color: #8B8E97; font-weight: 500;">Status Pembayaran</span>

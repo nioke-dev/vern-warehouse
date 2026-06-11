@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\User;
 
 class ProductSeeder extends Seeder
 {
@@ -14,6 +15,25 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+        // Produk demo dimiliki oleh user pertama (manager). Saat seeding tidak
+        // ada user yang login, jadi user_id harus diisi manual.
+        $userId = User::orderBy('id')->value('id');
+        Product::saving(function ($product) use ($userId) {
+            if (empty($product->user_id)) {
+                $product->user_id = $userId;
+            }
+        });
+        ProductVariant::saving(function ($variant) use ($userId) {
+            if (empty($variant->user_id)) {
+                $variant->user_id = $userId;
+            }
+        });
+        Category::saving(function ($category) use ($userId) {
+            if (empty($category->user_id)) {
+                $category->user_id = $userId;
+            }
+        });
+
         // Create Categories
         $frozenFood = Category::create(['name' => 'Frozen Food']);
         $snacks = Category::create(['name' => 'Snacks']);

@@ -27,7 +27,12 @@ class InventoryController extends Controller
             'variants' => 'required|array|min:1',
             'variants.*.variant_name' => 'required|string|max:50',
             'variants.*.variant_unit' => 'required|string|max:20',
-            'variants.*.sku' => 'required|string|max:100|unique:product_variants,sku',
+            // SKU unik per user (per bisnis), bukan global.
+            'variants.*.sku' => [
+                'required', 'string', 'max:100',
+                \Illuminate\Validation\Rule::unique('product_variants', 'sku')
+                    ->where('user_id', auth()->id()),
+            ],
             'variants.*.initial_stock' => 'required|integer|min:0',
             'variants.*.expired_date' => 'nullable|date',
             'variants.*.barcode' => 'required|string|max:100',
@@ -132,6 +137,26 @@ class InventoryController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $validated = $request->validate([
+            // Nama kategori unik per user (per bisnis).
+            'name' => [
+                'required', 'string', 'max:100',
+                \Illuminate\Validation\Rule::unique('categories', 'name')
+                    ->where('user_id', auth()->id()),
+            ],
+        ]);
+
+        // user_id terisi otomatis oleh trait BelongsToUser.
+        $category = Category::create(['name' => $validated['name']]);
+
+        return response()->json([
+            'success' => true,
+            'category' => ['id' => $category->id, 'name' => $category->name],
+        ]);
     }
 
     public function checkSku(Request $request)
