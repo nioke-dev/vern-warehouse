@@ -281,50 +281,46 @@
             });
         </script>
 
-        <!-- Profile Settings Modal (portal: dipindah ke body via JS agar tidak terganggu layout flex) -->
-        <div id="profileModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:99999;">
-            <!-- Backdrop -->
-            <div onclick="closeProfileModal()" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4); backdrop-filter:blur(4px);"></div>
-            <!-- Modal -->
-            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; border-radius:16px; box-shadow:0 25px 50px rgba(0,0,0,0.25); width:100%; max-width:420px; overflow:hidden;">
+        <!-- Profile Settings Modal -->
+        <div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:99999;">
+            <div onclick="closeProfileModal()" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(4px);"></div>
+            <div style="position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; border-radius:16px; box-shadow:0 25px 50px rgba(0,0,0,0.25); width:420px; max-width:calc(100% - 32px);">
                 <!-- Header -->
-                <div class="flex items-center justify-between px-6 pt-6 pb-2">
-                    <h2 class="text-lg font-bold text-black">Pengaturan Profil</h2>
-                    <button onclick="closeProfileModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
-                        <iconify-icon icon="mdi:close" width="20" height="20" class="text-gray-500"></iconify-icon>
-                    </button>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:24px 24px 8px;">
+                    <h2 style="font-size:18px; font-weight:700; color:#000; margin:0;">Pengaturan Profil</h2>
+                    <button onclick="closeProfileModal()" style="width:32px; height:32px; display:flex; align-items:center; justify-content:center; border:none; background:none; border-radius:8px; cursor:pointer; font-size:20px; color:#999;" onmouseover="this.style.background='#f3f4f6'" onmouseout="this.style.background='none'">&times;</button>
                 </div>
                 <!-- Body -->
-                <form id="profileForm" class="px-6 pb-6 pt-2">
+                <form id="profileForm" style="padding:8px 24px 24px;">
                     <!-- Photo -->
-                    <div class="flex flex-col items-center mb-5">
-                        <div class="relative group cursor-pointer" onclick="document.getElementById('profilePhotoInput').click()">
+                    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:20px;">
+                        <div onclick="document.getElementById('profilePhotoInput').click()" style="position:relative; width:80px; height:80px; cursor:pointer; border-radius:50%; overflow:hidden;">
                             @if(Auth::user()->profile_photo_path)
-                                <img id="profilePhotoPreview" src="{{ Auth::user()->profile_photo_path }}" alt="Foto Profil" class="w-20 h-20 rounded-full object-cover border-2 border-gray-200" />
+                                <img id="profilePhotoPreview" src="{{ Auth::user()->profile_photo_path }}" alt="Foto" style="width:80px; height:80px; border-radius:50%; object-fit:cover; border:2px solid #e5e7eb;" />
                             @else
-                                <div id="profilePhotoPreview" class="w-20 h-20 rounded-full bg-[#1053D5] flex items-center justify-center border-2 border-gray-200">
-                                    <span class="text-2xl font-bold text-white">{{ Auth::user()->initials() }}</span>
+                                <div id="profilePhotoPreview" style="width:80px; height:80px; border-radius:50%; background:#1053D5; display:flex; align-items:center; justify-content:center; border:2px solid #e5e7eb;">
+                                    <span style="font-size:24px; font-weight:700; color:#fff;">{{ Auth::user()->initials() }}</span>
                                 </div>
                             @endif
-                            <div class="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <iconify-icon icon="mdi:camera" width="24" height="24" class="text-white"></iconify-icon>
+                            <div id="profilePhotoOverlay" style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:50%; background:rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">
+                                <iconify-icon icon="mdi:camera" width="24" height="24" style="color:#fff;"></iconify-icon>
                             </div>
                         </div>
-                        <input type="file" id="profilePhotoInput" accept="image/jpeg,image/png,image/jpg,image/gif" class="hidden" onchange="previewPhoto(this)" />
-                        <p class="text-xs text-gray-400 mt-2">Klik untuk ganti foto</p>
+                        <input type="file" id="profilePhotoInput" accept="image/jpeg,image/png,image/jpg,image/gif" style="display:none;" onchange="previewPhoto(this)" />
+                        <p style="font-size:12px; color:#9ca3af; margin-top:8px;">Klik untuk ganti foto</p>
                     </div>
                     <!-- Name -->
-                    <div class="mb-4">
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Nama</label>
-                        <input type="text" id="profileNameInput" value="{{ Auth::user()->name }}" class="w-full h-11 px-4 bg-[#F1F3F6] border border-transparent rounded-xl text-sm font-medium text-black outline-none focus:border-[#1053D5] focus:bg-white transition-all" placeholder="Masukkan nama Anda" required />
+                    <div style="margin-bottom:16px;">
+                        <label style="display:block; font-size:12px; font-weight:700; color:#374151; margin-bottom:6px;">Nama</label>
+                        <input type="text" id="profileNameInput" value="{{ Auth::user()->name }}" required style="width:100%; height:44px; padding:0 16px; background:#F1F3F6; border:1.5px solid transparent; border-radius:12px; font-size:14px; font-weight:500; color:#000; outline:none; box-sizing:border-box; transition:all 0.2s;" onfocus="this.style.borderColor='#1053D5'; this.style.background='#fff';" onblur="this.style.borderColor='transparent'; this.style.background='#F1F3F6';" placeholder="Masukkan nama Anda" />
                     </div>
-                    <!-- Email (read-only) -->
-                    <div class="mb-5">
-                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Email</label>
-                        <input type="email" value="{{ Auth::user()->email }}" disabled class="w-full h-11 px-4 bg-[#F1F3F6] border border-transparent rounded-xl text-sm font-medium text-gray-400 outline-none cursor-not-allowed" />
+                    <!-- Email -->
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; font-size:12px; font-weight:700; color:#374151; margin-bottom:6px;">Email</label>
+                        <input type="email" value="{{ Auth::user()->email }}" disabled style="width:100%; height:44px; padding:0 16px; background:#F1F3F6; border:1.5px solid transparent; border-radius:12px; font-size:14px; font-weight:500; color:#9ca3af; outline:none; box-sizing:border-box; cursor:not-allowed;" />
                     </div>
-                    <!-- Save Button -->
-                    <button type="submit" id="profileSaveBtn" class="w-full h-11 bg-gradient-to-br from-[#1A6FFF] to-[#1053D5] text-white font-semibold text-sm rounded-xl border-none cursor-pointer hover:from-[#0D5CE8] hover:to-[#0A3A89] hover:-translate-y-0.5 hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                    <!-- Save -->
+                    <button type="submit" id="profileSaveBtn" style="width:100%; height:44px; background:linear-gradient(135deg, #1A6FFF 0%, #1053D5 100%); color:#fff; font-size:14px; font-weight:600; border:none; border-radius:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.2s;" onmouseover="this.style.background='linear-gradient(135deg, #0D5CE8 0%, #0A3A89 100%)'; this.style.boxShadow='0 4px 16px rgba(16,83,213,0.3)';" onmouseout="this.style.background='linear-gradient(135deg, #1A6FFF 0%, #1053D5 100%)'; this.style.boxShadow='none';">
                         Simpan Perubahan
                     </button>
                 </form>
