@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <link rel="icon" type="image/png" href="{{ asset('assets/images/logos/vern-logo.png') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>@yield('title', 'Vern Dasbor')</title>
 
@@ -211,12 +212,16 @@
                         </div>
                     </div>
 
-                    <!-- User Account Badge -->
-                    <div class="flex items-center gap-3 bg-white border border-black/5 shadow-sm rounded-full pl-4 pr-1 py-1 cursor-pointer hover:bg-gray-50 transition-all">
-                        <span class="text-sm font-bold text-black tracking-[-2%]">{{ Auth::user()->name }}</span>
-                        <div class="w-8 h-8 rounded-full bg-[#1053D5] flex items-center justify-center border border-black/10">
-                            <span class="text-xs font-bold text-white">{{ Auth::user()->initials() }}</span>
-                        </div>
+                    <!-- User Account Badge (click to open profile modal) -->
+                    <div onclick="openProfileModal()" class="flex items-center gap-3 bg-white border border-black/5 shadow-sm rounded-full pl-4 pr-1 py-1 cursor-pointer hover:bg-gray-50 transition-all">
+                        <span id="navbarUserName" class="text-sm font-bold text-black tracking-[-2%]">{{ Auth::user()->name }}</span>
+                        @if(Auth::user()->profile_photo_path)
+                            <img id="navbarUserPhoto" src="{{ Auth::user()->profile_photo_path }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover border border-black/10" />
+                        @else
+                            <div id="navbarUserInitials" class="w-8 h-8 rounded-full bg-[#1053D5] flex items-center justify-center border border-black/10">
+                                <span class="text-xs font-bold text-white">{{ Auth::user()->initials() }}</span>
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Log Out Button -->
@@ -272,6 +277,144 @@
                     if (!dropdown.contains(event.target) && !bellBtn.contains(event.target)) {
                         dropdown.classList.add('hidden');
                     }
+                }
+            });
+        </script>
+
+        <!-- Profile Settings Modal -->
+        <div id="profileModal" class="fixed inset-0 z-[9999] hidden">
+            <!-- Backdrop -->
+            <div onclick="closeProfileModal()" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+            <!-- Modal -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl w-full max-w-[420px] overflow-hidden">
+                <!-- Header -->
+                <div class="flex items-center justify-between px-6 pt-6 pb-2">
+                    <h2 class="text-lg font-bold text-black">Pengaturan Profil</h2>
+                    <button onclick="closeProfileModal()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-all cursor-pointer">
+                        <iconify-icon icon="mdi:close" width="20" height="20" class="text-gray-500"></iconify-icon>
+                    </button>
+                </div>
+                <!-- Body -->
+                <form id="profileForm" class="px-6 pb-6 pt-2">
+                    <!-- Photo -->
+                    <div class="flex flex-col items-center mb-5">
+                        <div class="relative group cursor-pointer" onclick="document.getElementById('profilePhotoInput').click()">
+                            @if(Auth::user()->profile_photo_path)
+                                <img id="profilePhotoPreview" src="{{ Auth::user()->profile_photo_path }}" alt="Foto Profil" class="w-20 h-20 rounded-full object-cover border-2 border-gray-200" />
+                            @else
+                                <div id="profilePhotoPreview" class="w-20 h-20 rounded-full bg-[#1053D5] flex items-center justify-center border-2 border-gray-200">
+                                    <span class="text-2xl font-bold text-white">{{ Auth::user()->initials() }}</span>
+                                </div>
+                            @endif
+                            <div class="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <iconify-icon icon="mdi:camera" width="24" height="24" class="text-white"></iconify-icon>
+                            </div>
+                        </div>
+                        <input type="file" id="profilePhotoInput" accept="image/jpeg,image/png,image/jpg,image/gif" class="hidden" onchange="previewPhoto(this)" />
+                        <p class="text-xs text-gray-400 mt-2">Klik untuk ganti foto</p>
+                    </div>
+                    <!-- Name -->
+                    <div class="mb-4">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Nama</label>
+                        <input type="text" id="profileNameInput" value="{{ Auth::user()->name }}" class="w-full h-11 px-4 bg-[#F1F3F6] border border-transparent rounded-xl text-sm font-medium text-black outline-none focus:border-[#1053D5] focus:bg-white transition-all" placeholder="Masukkan nama Anda" required />
+                    </div>
+                    <!-- Email (read-only) -->
+                    <div class="mb-5">
+                        <label class="block text-xs font-bold text-gray-700 mb-1.5">Email</label>
+                        <input type="email" value="{{ Auth::user()->email }}" disabled class="w-full h-11 px-4 bg-[#F1F3F6] border border-transparent rounded-xl text-sm font-medium text-gray-400 outline-none cursor-not-allowed" />
+                    </div>
+                    <!-- Save Button -->
+                    <button type="submit" id="profileSaveBtn" class="w-full h-11 bg-gradient-to-br from-[#1A6FFF] to-[#1053D5] text-white font-semibold text-sm rounded-xl border-none cursor-pointer hover:from-[#0D5CE8] hover:to-[#0A3A89] hover:-translate-y-0.5 hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                        Simpan Perubahan
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function openProfileModal() {
+                document.getElementById('profileModal').classList.remove('hidden');
+            }
+
+            function closeProfileModal() {
+                document.getElementById('profileModal').classList.add('hidden');
+            }
+
+            function previewPhoto(input) {
+                if (!input.files || !input.files[0]) return;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('profilePhotoPreview');
+                    if (preview.tagName === 'IMG') {
+                        preview.src = e.target.result;
+                    } else {
+                        const img = document.createElement('img');
+                        img.id = 'profilePhotoPreview';
+                        img.src = e.target.result;
+                        img.alt = 'Foto Profil';
+                        img.className = 'w-20 h-20 rounded-full object-cover border-2 border-gray-200';
+                        preview.parentNode.replaceChild(img, preview);
+                    }
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+
+            document.getElementById('profileForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const btn = document.getElementById('profileSaveBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div> Menyimpan...';
+
+                const formData = new FormData();
+                formData.append('name', document.getElementById('profileNameInput').value);
+                const photoInput = document.getElementById('profilePhotoInput');
+                if (photoInput.files && photoInput.files[0]) {
+                    formData.append('photo', photoInput.files[0]);
+                }
+
+                try {
+                    const token = document.querySelector('input[name="_token"]')?.value
+                        || document.querySelector('meta[name="csrf-token"]')?.content || '';
+                    const res = await fetch('{{ route("profile.update") }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+                    const data = await res.json();
+                    if (data.success) {
+                        // Update navbar
+                        document.getElementById('navbarUserName').textContent = data.name;
+                        const navPhoto = document.getElementById('navbarUserPhoto');
+                        const navInitials = document.getElementById('navbarUserInitials');
+                        if (data.photo) {
+                            if (navPhoto) {
+                                navPhoto.src = data.photo;
+                            } else if (navInitials) {
+                                const img = document.createElement('img');
+                                img.id = 'navbarUserPhoto';
+                                img.src = data.photo;
+                                img.alt = data.name;
+                                img.className = 'w-8 h-8 rounded-full object-cover border border-black/10';
+                                navInitials.parentNode.replaceChild(img, navInitials);
+                            }
+                        }
+                        closeProfileModal();
+                        if (typeof showToast === 'function') {
+                            showToast('Profil berhasil diperbarui.', 'success');
+                        }
+                    } else {
+                        const msg = data.errors ? Object.values(data.errors)[0][0] : 'Gagal menyimpan.';
+                        alert(msg);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Tidak dapat terhubung ke server.');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Simpan Perubahan';
                 }
             });
         </script>

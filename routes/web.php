@@ -96,6 +96,41 @@ Route::middleware('auth')->group(function () {
     Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
     Route::post('/orders/{orderId}/mark-as-paid', [OrderController::class, 'markAsPaid'])->name('orders.mark-as-paid');
     Route::view('/integrations', 'integrations')->name('integrations');
+
+    Route::post('/profile', function (Request $request) {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        ]);
+
+        $user = Auth::user();
+        $user->name = $request->input('name');
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $fileName = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            $targetDir = public_path('uploads/profiles');
+            if (!file_exists($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+            $targetPath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
+            copy($file->getRealPath(), $targetPath);
+            $user->profile_photo_path = url('uploads/profiles/' . $fileName);
+        }
+
+        $user->save();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'name' => $user->name,
+                'initials' => $user->initials(),
+                'photo' => $user->profile_photo_path,
+            ]);
+        }
+
+        return back();
+    })->name('profile.update');
     
     Route::post('/logout', function (Request $request) {
         Auth::logout();
