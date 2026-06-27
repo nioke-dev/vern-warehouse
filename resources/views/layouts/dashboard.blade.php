@@ -281,12 +281,12 @@
             });
         </script>
 
-        <!-- Profile Settings Modal -->
-        <div id="profileModal" class="fixed inset-0 z-[9999] hidden">
+        <!-- Profile Settings Modal (portal: dipindah ke body via JS agar tidak terganggu layout flex) -->
+        <div id="profileModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; z-index:99999;">
             <!-- Backdrop -->
-            <div onclick="closeProfileModal()" class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+            <div onclick="closeProfileModal()" style="position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.4); backdrop-filter:blur(4px);"></div>
             <!-- Modal -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl w-full max-w-[420px] overflow-hidden">
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; border-radius:16px; box-shadow:0 25px 50px rgba(0,0,0,0.25); width:100%; max-width:420px; overflow:hidden;">
                 <!-- Header -->
                 <div class="flex items-center justify-between px-6 pt-6 pb-2">
                     <h2 class="text-lg font-bold text-black">Pengaturan Profil</h2>
@@ -333,11 +333,13 @@
 
         <script>
             function openProfileModal() {
-                document.getElementById('profileModal').classList.remove('hidden');
+                const modal = document.getElementById('profileModal');
+                document.body.appendChild(modal);
+                modal.style.display = 'block';
             }
 
             function closeProfileModal() {
-                document.getElementById('profileModal').classList.add('hidden');
+                document.getElementById('profileModal').style.display = 'none';
             }
 
             function previewPhoto(input) {
