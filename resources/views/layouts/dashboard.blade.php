@@ -213,12 +213,10 @@
 
                     <!-- User Account Badge -->
                     <div class="flex items-center gap-3 bg-white border border-black/5 shadow-sm rounded-full pl-4 pr-1 py-1 cursor-pointer hover:bg-gray-50 transition-all">
-                        <span class="text-sm font-bold text-black tracking-[-2%]">Kevin Pradana</span>
-                        <img 
-                            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" 
-                            alt="Kevin Pradana" 
-                            class="w-8 h-8 rounded-full object-cover border border-black/10"
-                        />
+                        <span class="text-sm font-bold text-black tracking-[-2%]">{{ Auth::user()->name }}</span>
+                        <div class="w-8 h-8 rounded-full bg-[#1053D5] flex items-center justify-center border border-black/10">
+                            <span class="text-xs font-bold text-white">{{ Auth::user()->initials() }}</span>
+                        </div>
                     </div>
 
                     <!-- Log Out Button -->
